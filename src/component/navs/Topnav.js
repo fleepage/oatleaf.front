@@ -210,7 +210,7 @@ const TopNav = ({
           <MobileMenuIcon />
         </NavLink>
         <div className="position-relative d-lg-inline-block">
-          <a className="btn btn-light btn-sm ml-2" href="/accounts">
+          <a className="btn btn-outline-primary btn-sm ml-2" href="/accounts">
             Switch
           </a>
         </div>

@@ -33,16 +33,16 @@ const App = ({ match, ...props }) => {
   const { dispatch, auth } = useContext(AuthContext);
 
   const role = "Admin";
-  console.log(
-    menuItems.map((item) => {
-      var option = {};
-      if (item.permission) {
-        option.name = item.permission;
-        option.level = "rw";
-      }
-      return option;
-    })
-  );
+  // console.log(
+  //   menuItems.map((item) => {
+  //     var option = {};
+  //     if (item.permission) {
+  //       option.name = item.permission;
+  //       option.level = "rw";
+  //     }
+  //     return option;
+  //   })
+  // );
   const permission = UserRole[role]
     ? UserRole[role]
     : [
@@ -51,6 +51,7 @@ const App = ({ match, ...props }) => {
         { name: "support", level: "rw" },
       ];
   const permissionList = permission.map((item) => item.name);
+
   const handleLogout = () => {
     dispatch(LogoutAction());
   };

@@ -223,7 +223,7 @@ const Home = (props) => {
           <nav>
             <div className="container d-flex align-items-center justify-content-between">
               <a
-                className="navbar-ercas-logo pull-left c-pointer"
+                className="navbar-logo pull-left c-pointer"
                 href="#scroll"
                 onClick={(event) => scrollTo(event, "home")}
               >

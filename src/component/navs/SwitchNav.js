@@ -188,7 +188,7 @@ const SwitchNav = ({
   return (
     <nav className="navbar fixed-top">
       <div className="d-flex align-items-center navbar-left">
-        <div className="search ml-5">
+        <div className="search">
           <Input
             name="searchKeyword"
             id="searchKeyword"
