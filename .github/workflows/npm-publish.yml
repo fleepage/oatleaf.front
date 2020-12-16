@@ -1,6 +1,6 @@
 #Action for depolying oatleaf front-end
 
-name: 🚀 Deploy website on push
+name: 🚀 DeployAction
 
 # on:
 #   push:

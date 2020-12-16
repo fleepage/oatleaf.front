@@ -52,7 +52,16 @@ const Login = ({ history, loading, error, loginUserAction, ...props }) => {
   const onUserLogin = (values) => {
     if (!loading) {
       if (values.email !== "" && values.password !== "") {
-        loginUserAction(values, history);
+        //loginUserAction(values, history);
+        dispatch(
+          AuthActionSuccess({
+            isAuth: false,
+            isError: false,
+            data: {},
+            session: { role: "User" },
+          })
+        );
+        history.push("/app");
       }
     }
   };
@@ -143,10 +152,13 @@ const Login = ({ history, loading, error, loginUserAction, ...props }) => {
                         </div>
                       )}
                     </FormGroup>
-                    <div className="d-flex justify-content-between align-items-center">
+
+                    <div className="mb-5">
                       <NavLink to="/user/forgot-password">
                         <IntlMessages id="user.forgot-password-question" />
                       </NavLink>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center">
                       <NavLink to="/register">Register Here?</NavLink>
                       <Button
                         color="primary"
@@ -154,6 +166,7 @@ const Login = ({ history, loading, error, loginUserAction, ...props }) => {
                           loading ? "show-spinner" : ""
                         }`}
                         size="lg"
+                        onClick={onUserLogin}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
