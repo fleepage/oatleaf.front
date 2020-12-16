@@ -202,7 +202,7 @@ const Home = (props) => {
             <a href="https://ercas.com.ng/">Register Your School</a>
           </li>
           <li className="nav-item">
-            <a href="https://ercas.com.ng/">Contact Us</a>
+            <a href="/">Contact Us</a>
           </li>
           <li className="nav-item">
             <div className="separator" />
@@ -210,7 +210,7 @@ const Home = (props) => {
           <li className="nav-item pl-4">
             <a
               className="btn btn-outline-semi-light btn-sm pr-4 pl-4"
-              to="/login"
+              href="/login"
             >
               Signin
             </a>
@@ -583,7 +583,7 @@ const Home = (props) => {
                     <img
                       className="footer-logo"
                       alt="footer logo"
-                      src="/assets/logos/pocketlogistic.png"
+                      src="/assets/logos/white.png"
                     />
                   </a>
                 </div>
@@ -593,7 +593,7 @@ const Home = (props) => {
               <div className="row">
                 <div className="col-12"></div>
                 <div className="col-12 text-center">
-                  <p className="mb-0">2020 © PocketLogistic</p>
+                  <p className="mb-0">2020 © 0atleaf</p>
                 </div>
               </div>
             </div>
