@@ -139,3 +139,10 @@ html {
   margin-bottom: 50px;
   margin-top: 50px;
 }
+
+.feature-row-card {
+  border-radius: calc(0.15rem - 1px);
+  @include depth(1);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

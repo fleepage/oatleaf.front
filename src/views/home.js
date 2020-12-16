@@ -21,6 +21,19 @@ const slideSettings = {
   },
 };
 
+const mobileSlideSettings = {
+  type: "carousel",
+  gap: 30,
+  perView: 1,
+  hideNav: true,
+  peek: { before: 10, after: 10 },
+  breakpoints: {
+    600: { perView: 1 },
+    992: { perView: 2 },
+    1200: { perView: 3 },
+  },
+};
+
 const bannerItem = [
   {
     id: 1,
@@ -73,21 +86,21 @@ const features = [
     action: 1,
     img: "/assets/img/landing-page/features/school.svg",
     detail:
-      "On ErcasConnect IGR payment is one button away. <br /><br />All you have to do is select biller, select mda and revenue head then select the serices you are paying for then click on pay to initiate payment.",
+      "On Oatleaf payment is one button away. <br /><br />All you have to do is select biller, select mda and revenue head then select the serices you are paying for then click on pay to initiate payment.",
   },
   {
     title: "Student(s)",
     action: 2,
     img: "/assets/img/landing-page/features/knowledge.svg",
     detail:
-      "On ErcasConnect IGR payment is one button away. <br /><br />All you have to do is select biller, select mda and revenue head then select the serices you are paying for then click on pay to initiate payment.",
+      "On Oatleaf payment is one button away. <br /><br />All you have to do is select biller, select mda and revenue head then select the serices you are paying for then click on pay to initiate payment.",
   },
   {
     title: "Parent/Gaurdian",
     img: "/assets/img/landing-page/features/family.svg",
     action: 3,
     detail:
-      "At ErcasConnect we understand the concept of simplicity and efficiency we built this platform with customer at heart. We always blieve customer comes first, Paying for utility has never been this easy and simple",
+      "At Oatleaf we understand the concept of simplicity and efficiency we built this platform with customer at heart. We always blieve customer comes first, Paying for utility has never been this easy and simple",
   },
   {
     title: "Teacher(s)",
@@ -115,7 +128,7 @@ const features = [
     action: 5,
     img: "/assets/img/landing-page/features/developer.svg",
     detail:
-      "Ercas Integrated Solutions Provides much more services, check our our website for more information on what we can do for you..",
+      "Oatleaf Integrated Solutions Provides much more services, check our our website for more information on what we can do for you..",
   },
 ];
 
@@ -191,7 +204,7 @@ const Home = (props) => {
     >
       <div className="mobile-menu" onClick={(event) => event.stopPropagation()}>
         <a
-          className="logo-mobile-ercas c-pointer"
+          className="logo-mobile c-pointer"
           href="#scroll"
           onClick={(event) => scrollTo(event, "home")}
         >
@@ -199,7 +212,7 @@ const Home = (props) => {
         </a>
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a href="https://ercas.com.ng/">Register Your School</a>
+            <a href="https://Oatleaf.com/">Register Your School</a>
           </li>
           <li className="nav-item">
             <a href="/">Contact Us</a>
@@ -232,10 +245,10 @@ const Home = (props) => {
               </a>
               <ul className="navbar-nav d-none d-lg-flex flex-row">
                 <li className="nav-item">
-                  <a href="https://ercas.com.ng/">Register Your School</a>
+                  <a href="https://Oatleaf.com/">Register Your School</a>
                 </li>
                 <li className="nav-item">
-                  <a href="https://ercas.com.ng/">Contact Us</a>
+                  <a href="https://Oatleaf.com/">Contact Us</a>
                 </li>
                 <li className="nav-item pl-4">
                   <a
@@ -273,13 +286,13 @@ const Home = (props) => {
                       School without walls.
                     </div>
                     <p className="mb-5">
-                      Transforming schools into a digital platforms.
+                      Transforming schools into digital platforms.
                     </p>
                     <a
                       className="btn btn-secondary btn-xl mr-2 mb-2"
                       href="/request"
                     >
-                      Select a School
+                      Find a School
                       <i className="simple-icon-arrow-right" />
                     </a>
                   </div>
@@ -309,7 +322,7 @@ const Home = (props) => {
                 </div>
               </div>
 
-              <div className="row">
+              <div className="row d-none d-md-block">
                 <div className="col-12 p-0">
                   <div className="home-carousel">
                     <GlideComponent settings={slideSettings}>
@@ -332,10 +345,40 @@ const Home = (props) => {
                   </div>
                 </div>
               </div>
+
+              <div className="row d-block d-md-none">
+                <div className="col-12 p-0">
+                  <div className="home-carousel">
+                    <GlideComponent
+                      settings={{
+                        gap: 5,
+                        perView: 1,
+                        type: "carousel",
+                      }}
+                    >
+                      {slideItems.map((f, index) => (
+                        <div key={`slide_${index}`} className="card">
+                          <div className="card-body text-center">
+                            <div>
+                              <h2>{f.caption}</h2>
+                              <h5 className="font-weight-semibold">
+                                {f.title}
+                              </h5>
+                            </div>
+                            <div>
+                              <p className="detail-text">{f.detail}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </GlideComponent>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="section">
+          {/* <div className="section">
             <div className="container" id="video">
               <div className="row">
                 <div className="col-12">
@@ -355,7 +398,7 @@ const Home = (props) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="section">
             <div className="container" id="app">
@@ -413,7 +456,7 @@ const Home = (props) => {
               {features.map((feature, i) => (
                 <div key={`feature_${i}`}>
                   {i % 2 === 0 && (
-                    <div className="row feature-row mb-10">
+                    <div className="row feature-row mb-10 feature-row-card">
                       <div className="col-12 col-md-6 col-lg-5 d-flex align-items-center text-center">
                         <div className="feature-text-container">
                           <h2>{feature.title}</h2>
@@ -422,46 +465,25 @@ const Home = (props) => {
                               __html: feature.detail,
                             }}
                           ></p>
-                          <a
-                            color="primary"
-                            className={`btn btn-secondary btn-xl mr-2 mb-2`}
-                            size="lg"
-                            href={
-                              feature.action === 1
-                                ? "#scroll"
-                                : "http://app.ercas.ng/"
-                            }
-                            onClick={(event) => {
-                              if (feature.action === 1) {
-                                scrollTo(event, "form");
-                                setActiveTab(1);
-                              }
-                            }}
-                          >
-                            <span className="spinner d-inline-block"></span>
-                            <span className="label">
-                              {feature.action === 1 ? "Pay Now" : "SignIn"}
-                            </span>
-                          </a>
                         </div>
                       </div>
-                      <div className="col-12 col-md-6 col-lg-6 offset-lg-1 offset-md-0 position-relative text-center d-none d-md-block">
+                      <div className="col-12 col-md-6 col-lg-6 offset-lg-1 offset-md-0 position-relative text-center ">
                         <img
                           alt={feature.title}
                           src={feature.img}
-                          className="feature-image-right feature-image-charts position-relative"
+                          className=""
                         />
                       </div>
                       <br />
                     </div>
                   )}
                   {i % 2 === 1 && (
-                    <div className="row feature-row mb-10">
-                      <div className="col-12 col-md-6 col-lg-6 order-2 order-md-1 text-center d-none d-md-block">
+                    <div className="row feature-row mb-10 feature-row-card">
+                      <div className="col-12 col-md-6 col-lg-6 order-2 order-md-1 text-center ">
                         <img
                           alt={feature.title}
                           src={feature.img}
-                          className="feature-image-left feature-image-charts"
+                          className=""
                         />
                       </div>
                       <div className="col-12 col-md-6 offset-md-0 col-lg-5 offset-lg-1 d-flex align-items-center order-1 order-md-2 text-center">
@@ -472,29 +494,6 @@ const Home = (props) => {
                               __html: feature.detail,
                             }}
                           ></p>
-                          <a
-                            color="primary"
-                            className={`btn btn-secondary  btn-xl mr-2 mb-2`}
-                            size="lg"
-                            href={
-                              feature.action === 2
-                                ? "#scroll"
-                                : "http://app.ercas.ng/"
-                            }
-                            onClick={(event) => {
-                              if (feature.action === 2) {
-                                scrollTo(event, "form");
-                                setActiveTab(2);
-                              }
-                            }}
-                          >
-                            <span className="spinner d-inline-block"></span>
-                            <span className="label">
-                              {feature.action === 2
-                                ? "Pay Now"
-                                : "Visit Website"}
-                            </span>
-                          </a>
                         </div>
                       </div>
                       <br />
@@ -515,48 +514,6 @@ const Home = (props) => {
                     from paying IGR bills to Utility bill . Select a paymnt
                     category and get started.
                   </p>
-                </div>
-              </div>
-              <br />
-              <div className="row">
-                <div className="col-2 text-center">
-                  <h2>Logistic1</h2>
-                </div>
-                <div className="col-2 text-center">
-                  <h2>Logistic2</h2>
-                </div>
-                <div className="col-2 text-center">
-                  <h2>Logistic3</h2>
-                </div>
-                <div className="col-2 text-center">
-                  <h2>Logistic4</h2>
-                </div>
-                <div className="col-2 text-center">
-                  <h2>Logistic5</h2>
-                </div>
-                <div className="col-2 text-center">
-                  <h2>Logistic6</h2>
-                </div>
-              </div>
-              <br />
-              <div className="row">
-                <div className="col-2 text-center">
-                  <h2>Logistic1</h2>
-                </div>
-                <div className="col-2 text-center">
-                  <h2>Logistic2</h2>
-                </div>
-                <div className="col-2 text-center">
-                  <h2>Logistic3</h2>
-                </div>
-                <div className="col-2 text-center">
-                  <h2>Logistic4</h2>
-                </div>
-                <div className="col-2 text-center">
-                  <h2>Logistic5</h2>
-                </div>
-                <div className="col-2 text-center">
-                  <h2>Logistic6</h2>
                 </div>
               </div>
             </div>
