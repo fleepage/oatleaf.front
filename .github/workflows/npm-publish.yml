@@ -18,9 +18,9 @@ jobs:
           npm install
           npm run build
 
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
-        with:
-          server: ftp.samkirkland.com
-          username: myFtpUserName
-          password: ${{ secrets.password }}
+      # - name: 📂 Sync files
+      #   uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      #   with:
+      #     server: ftp-eu.site4now.net/oatleaf
+      #     username: xenophilya-001
+      #     password: ${{ secrets.password }}
