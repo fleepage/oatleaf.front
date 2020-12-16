@@ -25,7 +25,7 @@ jobs:
           CI: false
 
       - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
           server: ftp-eu.site4now.net/oatleaf
           username: xenophilya-001
