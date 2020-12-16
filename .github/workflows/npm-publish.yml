@@ -30,4 +30,6 @@ jobs:
           server: ftp-eu.site4now.net
           username: xenophilya-001
           password: ${{ secrets.SmarterAspFtp }}
+          local-dir: ./build/
           server-dir: /oatleaf/
+          dangerous-clean-slate: true
