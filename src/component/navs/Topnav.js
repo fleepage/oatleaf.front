@@ -30,14 +30,14 @@ import {
   menuHiddenBreakpoint,
   searchPath,
   localeOptions,
-  isDarkSwitchActive,
+  // isDarkSwitchActive,
   buyUrl,
   adminRoot,
 } from "../../constants/defaultValues";
 
 import { MobileMenuIcon, MenuIcon } from "../../component/svg";
 import TopnavEasyAccess from "./Topnav.EasyAccess";
-import TopnavDarkSwitch from "./Topnav.DarkSwitch";
+// import TopnavDarkSwitch from "./Topnav.DarkSwitch";
 
 import { getDirection, setDirection } from "../../helpers/Utils";
 
@@ -187,6 +187,10 @@ const TopNav = ({
     dispatch(clickOnMobileMenu(_containerClassnames));
   };
 
+  const handleAccountsSwitch = () => {
+    history.push("/accounts");
+  };
+
   const { messages } = intl;
   return (
     <nav className="navbar fixed-top">
@@ -209,11 +213,11 @@ const TopNav = ({
         >
           <MobileMenuIcon />
         </NavLink>
-        <div className="position-relative d-lg-inline-block">
+        {/* <div className="position-relative d-lg-inline-block">
           <a className="btn btn-outline-primary btn-sm ml-2" href="/accounts">
             Switch
           </a>
-        </div>
+        </div> */}
       </div>
       <NavLink className="navbar-logo" to={adminRoot}>
         <span className="logo d-none d-xs-block" />
@@ -221,7 +225,6 @@ const TopNav = ({
       </NavLink>
 
       <div className="navbar-right">
-        {isDarkSwitchActive && <TopnavDarkSwitch />}
         <div className="header-icons d-inline-block align-middle">
           <TopnavEasyAccess />
 
@@ -244,10 +247,15 @@ const TopNav = ({
               <ThumbnailLetters rounded small text={userName} />
             </DropdownToggle>
             <DropdownMenu className="mt-3" right>
-              <DropdownItem>Account</DropdownItem>
+              <DropdownItem onClick={() => handleAccountsSwitch()}>
+                Accounts
+              </DropdownItem>
               <DropdownItem>Features</DropdownItem>
               <DropdownItem>History</DropdownItem>
               <DropdownItem>Support</DropdownItem>
+              {/* <div className="text-center">
+                {isDarkSwitchActive && <TopnavDarkSwitch />}
+              </div> */}
               <DropdownItem divider />
               <DropdownItem onClick={() => handleLogout()}>
                 Sign out

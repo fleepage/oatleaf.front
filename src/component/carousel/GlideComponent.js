@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Glide from '@glidejs/glide';
-import { getDirection } from '../../helpers/Utils';
-import '@glidejs/glide/dist/css/glide.core.min.css';
+import React from "react";
+import PropTypes from "prop-types";
+import Glide from "@glidejs/glide";
+import { getDirection } from "../../helpers/Utils";
+import "@glidejs/glide/dist/css/glide.core.min.css";
 
 let resizeTimeOut = -1;
 let mountTimeOut = -1;
@@ -41,10 +41,10 @@ class GlideComponent extends React.Component {
       direction: getDirection().direction,
     });
     this.glideCarousel.mount();
-    this.glideCarousel.on('resize', this.onResize);
+    this.glideCarousel.on("resize", this.onResize);
     mountTimeOut = setTimeout(() => {
-      const event = document.createEvent('HTMLEvents');
-      event.initEvent('resize', false, false);
+      const event = document.createEvent("HTMLEvents");
+      event.initEvent("resize", false, false);
       window.dispatchEvent(event);
     }, 500);
   }
@@ -74,6 +74,7 @@ class GlideComponent extends React.Component {
   }
 
   render() {
+    const { dotSize } = this.props;
     return (
       <div>
         <div className="glide" ref={(node) => (this.carousel = node)}>
@@ -87,7 +88,10 @@ class GlideComponent extends React.Component {
                 className="glide__arrow glide__arrow--left left-arrow btn btn-link"
                 data-glide-dir="<"
               >
-                <i className="simple-icon-arrow-left" />
+                <i
+                  className="simple-icon-arrow-left"
+                  style={{ fontSize: `${dotSize}px` }}
+                />
               </button>
 
               <div
@@ -102,7 +106,10 @@ class GlideComponent extends React.Component {
                 className="glide__arrow glide__arrow--right right-arrow btn btn-link"
                 data-glide-dir=">"
               >
-                <i className="simple-icon-arrow-right" />
+                <i
+                  className="simple-icon-arrow-right"
+                  style={{ fontSize: `${dotSize}px` }}
+                />
               </button>
             </div>
           )}

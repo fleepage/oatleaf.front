@@ -235,7 +235,7 @@ const SwitchNav = ({
       </NavLink>
 
       <div className="navbar-right">
-        {isDarkSwitchActive && <TopnavDarkSwitch />}
+        {/* {isDarkSwitchActive && <TopnavDarkSwitch />} */}
         <div className="header-icons d-inline-block align-middle">
           <button
             className="header-icon btn btn-empty d-none d-sm-inline-block"
@@ -256,7 +256,7 @@ const SwitchNav = ({
               <ThumbnailLetters rounded small text={userName} />
             </DropdownToggle>
             <DropdownMenu className="mt-3" right>
-              <DropdownItem>Account</DropdownItem>
+              {/* <DropdownItem>Account</DropdownItem> */}
               <DropdownItem>Features</DropdownItem>
               <DropdownItem>History</DropdownItem>
               <DropdownItem>Support</DropdownItem>

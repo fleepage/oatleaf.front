@@ -221,10 +221,7 @@ const Home = (props) => {
             <div className="separator" />
           </li>
           <li className="nav-item pl-4">
-            <a
-              className="btn btn-outline-semi-light btn-sm pr-4 pl-4"
-              href="/login"
-            >
+            <a className="btn btn-outline-primary btn-sm ml-2" href="/login">
               Signin
             </a>
           </li>
@@ -252,7 +249,7 @@ const Home = (props) => {
                 </li>
                 <li className="nav-item pl-4">
                   <a
-                    className="btn btn-outline-semi-light btn-sm pr-4 pl-4"
+                    className="btn btn-outline-primary btn-sm ml-2"
                     href="/login"
                   >
                     Signin
