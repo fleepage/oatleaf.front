@@ -7,6 +7,7 @@ import Headroom from "react-headroom";
 import HomeForm from "./anonymous/homeForm";
 import { AuthContext } from "../context/AuthContext";
 import { Card, CardBody } from "reactstrap";
+import ServiceCard from "../component/cards/ServiceCard";
 
 const slideSettings = {
   type: "carousel",
@@ -129,6 +130,57 @@ const features = [
     img: "/assets/img/landing-page/features/developer.svg",
     detail:
       "Oatleaf Integrated Solutions Provides much more services, check our our website for more information on what we can do for you..",
+  },
+];
+
+const actions = [
+  {
+    title: "Check Student Performance",
+    icon: "simple-icon-graduation",
+    value: "get the latest app from either google playstore or apple appstore",
+    btext: "Check Now",
+  },
+  {
+    title: "Get A Freelance Teacher",
+    icon: "simple-icon-user",
+    value: "get the latest app from either google playstore or apple appstore",
+    btext: "Find Now",
+  },
+  {
+    title: "Find School",
+    icon: "iconsminds-building",
+    value: "get the latest app from either google playstore or apple appstore",
+    btext: "Search",
+  },
+  {
+    title: "Find Event",
+    icon: "iconsminds-mail-read",
+    value: "get the latest app from either google playstore or apple appstore",
+    btext: "Search",
+  },
+  {
+    title: "Manage Your School",
+    icon: "iconsminds-building",
+    value: "get the latest app from either google playstore or apple appstore",
+    btext: "Get Started",
+  },
+  {
+    title: "Manage An Organisation",
+    icon: "iconsminds-building",
+    value: "get the latest app from either google playstore or apple appstore",
+    btext: "Get Started",
+  },
+  {
+    title: "Organise An Event",
+    icon: "iconsminds-building",
+    value: "get the latest app from either google playstore or apple appstore",
+    btext: "Get Started",
+  },
+  {
+    title: "Do Lot More",
+    icon: "iconsminds-building",
+    value: "get the latest app from either google playstore or apple appstore",
+    btext: "Get Started",
   },
 ];
 
@@ -396,6 +448,30 @@ const Home = (props) => {
               </div>
             </div>
           </div> */}
+
+          <div className="section">
+            <div className="container" id="action">
+              <div className="row">
+                <div className="col-12  align-items-center text-center">
+                  <div className="feature-text-container">
+                    <h2>Things you can do.</h2>
+                    <div className="row">
+                      {actions.map((item, index) => {
+                        return (
+                          <div
+                            key={`action_card_${index}`}
+                            className="col-12 col-md-3 col-lg-3"
+                          >
+                            <ServiceCard {...item} className="mb-0" />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className="section">
             <div className="container" id="app">
