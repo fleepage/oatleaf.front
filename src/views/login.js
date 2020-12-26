@@ -1,16 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
-import { LoginService } from "../services/AuthService";
-import { AuthContext } from "../context/AuthContext";
-import { AuthActionSuccess } from "../actions/AuthAction";
-import { Link } from "react-router-dom";
-
-import { Row, Card, CardTitle, Label, FormGroup, Button } from "reactstrap";
+import { Field, Form, Formik } from "formik";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-
-import { Formik, Form, Field } from "formik";
+import { Button, Card, CardTitle, FormGroup, Label, Row } from "reactstrap";
+import { AuthActionSuccess } from "../actions/AuthAction";
 import { Colxx } from "../component/common/CustomBootstrap";
+import { AuthContext } from "../context/AuthContext";
 import IntlMessages from "../helpers/IntlMessages";
 import UserLayout from "../layout/UserLayout";
+import { LoginService } from "../services/AuthService";
 
 const validatePassword = (value) => {
   let error;

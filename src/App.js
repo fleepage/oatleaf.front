@@ -1,19 +1,14 @@
 import React, { Suspense } from "react";
-import AuthContextProvider from "./context/AuthContext";
-import BillContextProvider from "./context/BillContext";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
-import ProtectedRoute from "./route/ProtectedRoute";
 import { IntlProvider } from "react-intl";
-import AppLocale from "./lang";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //import ColorSwitcher from './components/common/ColorSwitcher';
 //import { NotificationContainer } from './components/common/react-notifications';
-import { isMultiColorActive, adminRoot } from "./constants/defaultValues";
+import { adminRoot } from "./constants/defaultValues";
+import AuthContextProvider from "./context/AuthContext";
+import BillContextProvider from "./context/BillContext";
 import { getDirection } from "./helpers/Utils";
+import AppLocale from "./lang";
+import ProtectedRoute from "./route/ProtectedRoute";
 
 const Register = React.lazy(() =>
   import(/* webpackChunkName: "views" */ "./views/register")

@@ -1,5 +1,3 @@
-import React from "react";
-
 const UserRole = {
   Admin: [
     { name: "work", level: "rw" },

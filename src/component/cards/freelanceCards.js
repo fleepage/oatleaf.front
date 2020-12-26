@@ -1,21 +1,16 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import {
-  Row,
+  Button,
   Card,
   CardBody,
-  CardTitle,
   CardSubtitle,
-  CardImg,
   CardText,
-  Button,
+  Row,
 } from "reactstrap";
-import { NavLink } from "react-router-dom";
-
-import IntlMessages from "../../helpers/IntlMessages";
+import { adminRoot } from "../../constants/defaultValues";
 import { Colxx } from "../common/CustomBootstrap";
 import ThumbnailImage from "./ThumbnailImage";
-import ThumbnailLetters from "./ThumbnailLetters";
-import { adminRoot } from "../../constants/defaultValues";
 
 const FreelanceCard = () => {
   const freelance = [1, 2, 3, 4, 5, 6];

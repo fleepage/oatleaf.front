@@ -1,42 +1,40 @@
 /* eslint-disable no-param-reassign */
-import React, { createRef, useState, useContext } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Field, Form, Formik } from "formik";
+import React, { createRef, useContext, useState } from "react";
+import { Step, Steps, Wizard } from "react-albus";
+import SweetAlert from "react-bootstrap-sweetalert";
+import { injectIntl } from "react-intl";
+import { usePaystackPayment } from "react-paystack";
+import Select from "react-select";
+import AsyncSelect from "react-select/async";
 import {
+  Button,
+  ButtonGroup,
   Card,
   CardBody,
+  CardTitle,
   FormGroup,
   Label,
-  Spinner,
-  Button,
   Row,
+  Spinner,
   Table,
-  ButtonGroup,
-  CardTitle,
 } from "reactstrap";
-import { Wizard, Steps, Step } from "react-albus";
-import { injectIntl } from "react-intl";
-import { Formik, Form, Field } from "formik";
-import IntlMessages from "../../helpers/IntlMessages";
+import { Colxx } from "../../component/common/CustomBootstrap";
 import BottomNavigation from "../../component/wizard/BottomNavigation";
 import TopNavigation from "../../component/wizard/TopNavigation";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { AuthContext } from "../../context/AuthContext";
-import { BillActionStore } from "../../actions/BillAction";
-import SweetAlert from "react-bootstrap-sweetalert";
-import { Colxx } from "../../component/common/CustomBootstrap";
-import RightSideMenu from "../navs/rightSideMenu";
-import { usePaystackPayment } from "react-paystack";
-import { NavLink } from "react-router-dom";
-import Rating from "../common/rating";
+import IntlMessages from "../../helpers/IntlMessages";
 import {
-  LevelThreeService,
   BillerService,
   LevelOneService,
+  LevelThreeService,
   LevelTwoService,
   MetaDataService,
 } from "../../services/BillService";
-import Select from "react-select";
-import AsyncSelect from "react-select/async";
+import Rating from "../common/rating";
 import { DarkcustomStyles } from "../common/selectCss";
+import RightSideMenu from "../navs/rightSideMenu";
 
 const validateName = (value) => {
   let error;

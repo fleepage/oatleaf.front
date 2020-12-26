@@ -1,17 +1,15 @@
-import React, { createRef, useState, useContext } from "react";
+import moment from "moment";
+import React, { useState } from "react";
 import {
   Badge,
-  Row,
+  Button,
   Card,
   CardBody,
-  Button,
-  CardTitle,
-  Table,
   CardFooter,
-  NavItem,
+  CardTitle,
+  Row,
 } from "reactstrap";
-import { Colxx, Separator } from "../../component/common/CustomBootstrap";
-import moment from "moment";
+import { Colxx } from "../../component/common/CustomBootstrap";
 
 const SupportPreview = ({ match, ...props }) => {
   const [isEmpty, setIsEmpty] = useState(true);

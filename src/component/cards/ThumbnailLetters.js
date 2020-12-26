@@ -1,12 +1,12 @@
-import React from 'react';
-import classnames from 'classnames';
+import classnames from "classnames";
+import React from "react";
 
 const ThumbnailLetters = ({ text, color, className, rounded, small }) => {
-  let letters = '';
-  if (text.indexOf(' ') > -1) {
-    text.split(' ').map((word) => {
+  let letters = "";
+  if (text.indexOf(" ") > -1) {
+    text.split(" ").map((word) => {
       if (word.length > 1) letters += word.slice(0, 1);
-      return '';
+      return "";
     });
   } else {
     letters += text.slice(0, 2);
@@ -19,9 +19,9 @@ const ThumbnailLetters = ({ text, color, className, rounded, small }) => {
   return (
     <div
       className={`align-self-center list-thumbnail-letters ${
-        color ? `btn-${color}` : ''
+        color ? `btn-${color}` : ""
       }  ${className}  ${classnames({
-        'rounded-circle': rounded,
+        "rounded-circle": rounded,
         small,
       })}`}
       title={text}

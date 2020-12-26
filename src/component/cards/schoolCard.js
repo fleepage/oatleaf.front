@@ -1,15 +1,12 @@
 import React from "react";
 import {
-  CardText,
-  CardSubtitle,
-  Row,
   Card,
   CardBody,
-  CardTitle,
   CardImg,
-  Badge,
+  CardSubtitle,
+  CardText,
+  Row,
 } from "reactstrap";
-import IntlMessages from "../../helpers/IntlMessages";
 import { Colxx } from "../common/CustomBootstrap";
 
 const school = [1, 2, 3, 4, 5, 6];

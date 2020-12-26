@@ -1,12 +1,10 @@
 import React from "react";
-import { Row, Card, CardBody, CardTitle } from "reactstrap";
 import {
-  withScriptjs,
-  withGoogleMap,
   GoogleMap,
   Marker,
+  withGoogleMap,
+  withScriptjs,
 } from "react-google-maps";
-import { Colxx } from "./CustomBootstrap";
 
 const MapWithAMarker = withScriptjs(
   withGoogleMap(() => (

@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Glide from '@glidejs/glide';
-import { getDirection } from '../../helpers/Utils';
-import '@glidejs/glide/dist/css/glide.core.min.css';
-import '@glidejs/glide/dist/css/glide.theme.min.css';
+import Glide from "@glidejs/glide";
+import "@glidejs/glide/dist/css/glide.core.min.css";
+import "@glidejs/glide/dist/css/glide.theme.min.css";
+import PropTypes from "prop-types";
+import React from "react";
+import { getDirection } from "../../helpers/Utils";
 
 let resizeTimeOut = -1;
 let mountTimeOut = -1;
@@ -61,10 +61,10 @@ class GlideComponentThumbs extends React.Component {
     const gap = this.glideCarouselThumbs.index + this.state.thumbsPerView;
     this.setState({ activeIndex: this.glideCarouselImages.index });
     if (this.state.activeIndex >= gap) {
-      this.glideCarouselThumbs.go('>');
+      this.glideCarouselThumbs.go(">");
     }
     if (this.state.activeIndex < this.glideCarouselThumbs.index) {
-      this.glideCarouselThumbs.go('<');
+      this.glideCarouselThumbs.go("<");
     }
   }
 
@@ -81,14 +81,14 @@ class GlideComponentThumbs extends React.Component {
     });
     this.glideCarouselThumbs.mount();
 
-    this.glideCarouselThumbs.on('resize', this.thumbsResize);
-    this.glideCarouselImages.on('swipe.end', this.imagesSwipeEnd);
+    this.glideCarouselThumbs.on("resize", this.thumbsResize);
+    this.glideCarouselImages.on("swipe.end", this.imagesSwipeEnd);
 
     mountTimeOut = setTimeout(() => {
-      const event = document.createEvent('HTMLEvents');
-      event.initEvent('resize', false, false);
+      const event = document.createEvent("HTMLEvents");
+      event.initEvent("resize", false, false);
       window.dispatchEvent(event);
-      this.glideCarouselImages.on('resize', this.onResize);
+      this.glideCarouselImages.on("resize", this.onResize);
     }, 500);
   }
 
@@ -159,8 +159,8 @@ class GlideComponentThumbs extends React.Component {
                   <div
                     className={
                       index === this.state.activeIndex
-                        ? 'glide__slide active'
-                        : 'glide__slide'
+                        ? "glide__slide active"
+                        : "glide__slide"
                     }
                     key={item.id}
                     onClick={() => {

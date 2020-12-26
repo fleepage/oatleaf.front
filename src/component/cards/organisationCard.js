@@ -1,15 +1,12 @@
 import React from "react";
 import {
-  CardText,
-  CardSubtitle,
-  Row,
   Card,
   CardBody,
-  CardTitle,
   CardImg,
-  Badge,
+  CardSubtitle,
+  CardText,
+  Row,
 } from "reactstrap";
-import IntlMessages from "../../helpers/IntlMessages";
 import { Colxx } from "../common/CustomBootstrap";
 
 const OrganisationCard = () => {

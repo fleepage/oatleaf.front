@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
 import Glide from "@glidejs/glide";
-import { getDirection } from "../../helpers/Utils";
 import "@glidejs/glide/dist/css/glide.core.min.css";
+import PropTypes from "prop-types";
+import React from "react";
+import { getDirection } from "../../helpers/Utils";
 
 let resizeTimeOut = -1;
 let mountTimeOut = -1;

@@ -1,5 +1,5 @@
-import React from 'react';
-import classnames from 'classnames';
+import classnames from "classnames";
+import React from "react";
 
 const ThumbnailImage = ({ alt, src, className, rounded, small }) => {
   return (
@@ -8,7 +8,7 @@ const ThumbnailImage = ({ alt, src, className, rounded, small }) => {
       src={src}
       className={`img-thumbnail list-thumbnail align-self-center ${className}  ${classnames(
         {
-          'rounded-circle': rounded,
+          "rounded-circle": rounded,
           small,
         }
       )}`}

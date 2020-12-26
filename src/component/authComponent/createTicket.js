@@ -1,26 +1,16 @@
-import React, { useRef, useState, useContext } from "react";
+import { Field, Form, Formik } from "formik";
+import React, { useRef, useState } from "react";
 import {
-  Badge,
-  Row,
-  Card,
-  CardBody,
   Button,
-  CardTitle,
-  Table,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  CardFooter,
   FormGroup,
   Label,
-  NavItem,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
 } from "reactstrap";
-import { Colxx, Separator } from "../../component/common/CustomBootstrap";
-import moment from "moment";
-import { Formik, Form, Field } from "formik";
-import DropBox from "../uploader/dropBox";
 import * as Yup from "yup";
+import DropBox from "../uploader/dropBox";
 
 const CreateTicket = ({ show = false, refresh, setShow, ...props }) => {
   const [modalRight, setModalRight] = useState(show);

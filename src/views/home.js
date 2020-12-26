@@ -1,13 +1,10 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { NavLink } from "react-router-dom";
 import classnames from "classnames";
-import GlideComponent from "../component/carousel/GlideComponent";
-import { scroller } from "react-scroll";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Headroom from "react-headroom";
-import HomeForm from "./anonymous/homeForm";
-import { AuthContext } from "../context/AuthContext";
-import { Card, CardBody } from "reactstrap";
+import { scroller } from "react-scroll";
 import ServiceCard from "../component/cards/ServiceCard";
+import GlideComponent from "../component/carousel/GlideComponent";
+import { AuthContext } from "../context/AuthContext";
 
 const slideSettings = {
   type: "carousel",
@@ -43,8 +40,7 @@ const bannerItem = [
   },
   {
     id: 2,
-    image:
-      "https://media.gettyimages.com/photos/stack-of-books-picture-id157482029?s=612x612",
+    image: "/assets/img/landing-page/features/home1.png",
     name: "oatlaf",
   },
   {

@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
+import { Field, Form, Formik } from "formik";
 import React, { createRef, useState } from "react";
-import { Card, CardBody, FormGroup, Label, Spinner } from "reactstrap";
-import { Wizard, Steps, Step } from "react-albus";
+import { Step, Steps, Wizard } from "react-albus";
 import { injectIntl } from "react-intl";
-import { Formik, Form, Field } from "formik";
-import IntlMessages from "../../helpers/IntlMessages";
+import { Card, CardBody, FormGroup, Label, Spinner } from "reactstrap";
 import BottomNavigation from "../../component/wizard/BottomNavigation";
 import TopNavigation from "../../component/wizard/TopNavigation";
+import IntlMessages from "../../helpers/IntlMessages";
 import RightSideMenu from "../navs/rightSideMenu";
 
 const validateEmail = (value) => {
