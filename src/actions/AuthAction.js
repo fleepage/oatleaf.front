@@ -1,4 +1,9 @@
-import { LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT } from "../constants/defaultValues";
+import {
+  CLEARMESSAGE,
+  LOGIN_FAILED,
+  LOGIN_SUCCESS,
+  LOGOUT,
+} from "../constants/defaultValues";
 
 export const AuthActionSuccess = (payload) => {
   return {
@@ -14,8 +19,16 @@ export const AuthActionFailed = (payload) => {
   };
 };
 
-export const LogoutAction = () => {
+export const LogoutAction = (payload) => {
   return {
     type: LOGOUT,
+    payload: payload,
+  };
+};
+
+export const ClearMessageAction = (payload) => {
+  return {
+    type: CLEARMESSAGE,
+    payload: payload,
   };
 };

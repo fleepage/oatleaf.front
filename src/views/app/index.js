@@ -1,12 +1,11 @@
-import React, { Suspense, useEffect, useContext } from "react";
-import { Route, withRouter, Switch, Redirect } from "react-router-dom";
-import AppLayout from "../../layout/AppLayout";
-import MenuContextProvider from "../../context/MenuContext";
+import React, { Suspense, useContext, useEffect, useState } from "react";
+import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import { LogoutAction } from "../../actions/AuthAction";
+import { AccountContext } from "../../context/AccountContext";
 import { AuthContext } from "../../context/AuthContext";
+import MenuContextProvider from "../../context/MenuContext";
+import AppLayout from "../../layout/AppLayout";
 import PermissionedRoute from "../../route/PermissionedRoute";
-import { UserRole } from "../../constants/authHelper";
-import menuItems from "../../constants/menu";
 
 // import { ProtectedRoute, UserRole } from '../../helpers/authHelper';
 
@@ -31,60 +30,62 @@ const Receipt = React.lazy(() =>
 
 const App = ({ match, ...props }) => {
   const { dispatch, auth } = useContext(AuthContext);
+  const accountContext = useContext(AccountContext);
+  const [permissionList, setPermissionList] = useState(
+    accountContext?.account?.permissions?.map((x) => x.permission)
+  );
+  const [role, setRole] = useState("User");
 
-  const role = "Admin";
-  // console.log(
-  //   menuItems.map((item) => {
-  //     var option = {};
-  //     if (item.permission) {
-  //       option.name = item.permission;
-  //       option.level = "rw";
-  //     }
-  //     return option;
-  //   })
-  // );
-  const permission = UserRole[role]
-    ? UserRole[role]
-    : [
-        { name: "history", level: "rw" },
-        { name: "store", level: "rw" },
-        { name: "support", level: "rw" },
-      ];
-  const permissionList = permission.map((item) => item.name);
+  useEffect(() => {
+    try {
+      setRole(
+        accountContext?.account?.data[accountContext?.account?.account ?? 0]
+          ?.role
+      );
+    } catch (e) {
+      props.history.push("/accounts");
+    }
+  }, [role, permissionList]);
+
+  //const role = "Admin";
+  //const permission = accountContext?.account?.permissions;
+  //console.log(accountContext?.account?.permissions?.map((x) => x.permission));
+  //const permissionList = []; //permission.map((item, i) => item.name);
 
   const handleLogout = () => {
-    dispatch(LogoutAction());
+    dispatch(LogoutAction({ message: "" }));
   };
 
   return (
-    <MenuContextProvider>
-      <AppLayout handleLogout={handleLogout} permission={permissionList}>
-        <div className="dashboard-wrapper">
-          <Suspense fallback={<div className="loading" />}>
-            <Switch>
-              <Redirect exact from={`${match.url}/`} to={`/accounts`} />
+    <>
+      <MenuContextProvider>
+        <AppLayout handleLogout={handleLogout} permission={permissionList}>
+          <div className="dashboard-wrapper">
+            <Suspense fallback={<div className="loading" />}>
+              <Switch>
+                <Redirect exact from={`${match.url}/`} to={`/accounts`} />
 
-              <Route
-                path={`${match.url}/home`}
-                render={(props) => <DashBoard {...props} view={"admin"} />}
-              />
+                <Route
+                  path={`${match.url}/home`}
+                  render={(props) => <DashBoard {...props} view={role} />}
+                />
 
-              <PermissionedRoute
-                permission={"history"}
-                permissionList={permissionList}
-                path={`${match.url}/history`}
-                component={(props) => <History {...props} />}
-              />
+                <PermissionedRoute
+                  permission={"history"}
+                  permissionList={permissionList}
+                  path={`${match.url}/history`}
+                  component={(props) => <History {...props} />}
+                />
 
-              <Route
-                path={`${match.url}/state-bill`}
-                render={(props) => <StateBills {...props} />}
-              />
-              <Route
-                path={`${match.url}/utility-bill`}
-                render={(props) => <UtilityBills {...props} />}
-              />
-              {/* <Route
+                <Route
+                  path={`${match.url}/state-bill`}
+                  render={(props) => <StateBills {...props} />}
+                />
+                <Route
+                  path={`${match.url}/utility-bill`}
+                  render={(props) => <UtilityBills {...props} />}
+                />
+                {/* <Route
                 path={`${match.url}/history`}
                 render={(props) =>
                   props.location.search.length === 0 ? (
@@ -95,24 +96,25 @@ const App = ({ match, ...props }) => {
                 }
               /> */}
 
-              {/* <Route
+                {/* <Route
                 path={`${match.url}/support`}
                 render={(props) => <Help {...props} />}
               /> */}
 
-              <PermissionedRoute
-                permission={"support"}
-                permissionList={permissionList}
-                path={`${match.url}/support`}
-                component={(props) => <Help {...props} />}
-              />
+                <PermissionedRoute
+                  permission={"support"}
+                  permissionList={permissionList}
+                  path={`${match.url}/support`}
+                  component={(props) => <Help {...props} />}
+                />
 
-              <Redirect to="/error" />
-            </Switch>
-          </Suspense>
-        </div>
-      </AppLayout>
-    </MenuContextProvider>
+                <Redirect to="/error" />
+              </Switch>
+            </Suspense>
+          </div>
+        </AppLayout>
+      </MenuContextProvider>
+    </>
   );
 };
 

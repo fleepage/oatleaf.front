@@ -9,8 +9,9 @@ const DashBoard = ({ intl, match, view = "default", ...props }) => {
       <Row>
         <Colxx xxs="12">
           {{
-            admin: <Admin match={match} />,
-            teacher: <div>Teacher</div>,
+            Admin: <Admin match={match} {...props} />,
+            Teacher: <div>Teacher</div>,
+            OrgAdmin: <div>OrgAdmin</div>,
             default: <div>Default</div>,
           }[view] || <div>Default</div>}
         </Colxx>

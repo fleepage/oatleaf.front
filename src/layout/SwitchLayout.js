@@ -1,19 +1,14 @@
 import React, { useContext } from "react";
-import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { MenuContext } from "../context/MenuContext";
-import TopNav from "../component/navs/Topnav";
-import SwitchSidebar from "../component/navs/SwitchSidebar";
-import Footer from "../component/navs/Footer";
-import { AuthContext } from "../context/AuthContext";
 import {
-  setContainerClassnames,
   addContainerClassname,
-  changeDefaultClassnames,
   changeSelectedMenuHasSubItems,
+  setContainerClassnames,
 } from "../actions/MenuActions";
-import { UserRole } from "../constants/authHelper";
+import Footer from "../component/navs/Footer";
 import SwitchNav from "../component/navs/SwitchNav";
+import { AuthContext } from "../context/AuthContext";
+import { MenuContext } from "../context/MenuContext";
 
 const SwitchLayout = ({
   containerClassnames,
@@ -73,7 +68,7 @@ const SwitchLayout = ({
         permission={permission}
       /> */}
 
-      <main>
+      <main style={{ marginLeft: "100px" }}>
         <div className="container-fluid">{children}</div>
       </main>
 

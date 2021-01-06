@@ -45,8 +45,12 @@ const bannerItem = [
   },
   {
     id: 3,
-    image:
-      "https://static.scientificamerican.com/sciam/cache/file/1DDFE633-2B85-468D-B28D05ADAE7D1AD8_source.jpg?w=590&h=800&D80F3D79-4382-49FA-BE4B4D0C62A5C3ED",
+    image: "/assets/img/landing-page/features/parent-teachers.png",
+    name: "oatlaf",
+  },
+  {
+    id: 3,
+    image: "/assets/img/landing-page/features/library.png",
     name: "oatlaf",
   },
 ];
@@ -358,7 +362,10 @@ const Home = (props) => {
                   >
                     {bannerItem.map((item) => {
                       return (
-                        <div key={item.id} className="mx-auto my-auto">
+                        <div
+                          key={item.id}
+                          className="mx-auto my-auto text-center"
+                        >
                           <img src={item.image} alt={item.name} />
                         </div>
                       );

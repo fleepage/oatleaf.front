@@ -19,7 +19,7 @@ const FreelanceCard = () => {
       <Colxx xxs="12">
         <Row>
           {freelance.map((item, i) => (
-            <Colxx md="6" sm="6" lg="4" xxs="12">
+            <Colxx md="6" sm="6" lg="4" xxs="12" key={i}>
               <Card className="d-flex flex-row mb-4">
                 <NavLink to={`${adminRoot}/cards`} className="d-flex">
                   <ThumbnailImage

@@ -1,18 +1,21 @@
 import axios from "axios";
-
-import { REGISTER_URL,ADMIN_LOGIN_URL } from "../constants/defaultValues";
+import {
+  ADMIN_LOGIN_URL,
+  BASE_URL,
+  REGISTER_URL,
+} from "../constants/defaultValues";
 
 export const LoginService = async (payload) => {
   try {
     var data = {
-      "username":payload.email,
-      "password":payload.password
+      authenticateDto: {
+        username: payload.email,
+        password: payload.password,
+      },
     };
     let res = await axios.post(ADMIN_LOGIN_URL, data);
-    console.log(res.status);
     return res;
   } catch (error) {
-    //console.log(error.response.data);
     return error.response;
   }
 };
@@ -20,14 +23,57 @@ export const LoginService = async (payload) => {
 export const RegisterService = async (payload) => {
   try {
     const data = {
-      firstName: payload.firstName,
-      lastName: payload.lastName,
-      phone: payload.phone,
-      email: payload.email,
-      password: payload.password,
-      passwordConfirmation: payload.passwordConfirmation
-    };  
+      registerDto: {
+        firstName: payload.firstname,
+        lastName: payload.lastname,
+        phone: payload.phone,
+        email: payload.email,
+        password: payload.password,
+        passwordConfirmation: payload.passwordConfirmation,
+      },
+    };
+    //console.log(data);
     let res = await axios.post(REGISTER_URL, data);
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const MyAccountsService = async (payload) => {
+  try {
+    var config = {
+      headers: {
+        Authorization: `Bearer ${payload.token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    var data = {};
+
+    let res = await axios.post(`${BASE_URL}/Accounts/MyAccounts`, data, config);
+
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const SelectAccountService = async (payload) => {
+  try {
+    var config = {
+      headers: {
+        Authorization: `Bearer ${payload.token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    var data = {
+      selectAccountDto: {
+        account: payload.account,
+      },
+    };
+
+    let res = await axios.post(`${BASE_URL}/Accounts/select`, data, config);
+
     return res;
   } catch (error) {
     return error.response;

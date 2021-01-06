@@ -1,7 +1,16 @@
 import { Field, Form, Formik } from "formik";
+import queryString from "query-string";
 import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Button, Card, CardTitle, FormGroup, Label, Row } from "reactstrap";
+import {
+  Alert,
+  Button,
+  Card,
+  CardTitle,
+  FormGroup,
+  Label,
+  Row,
+} from "reactstrap";
 import { AuthActionSuccess } from "../actions/AuthAction";
 import { Colxx } from "../component/common/CustomBootstrap";
 import { AuthContext } from "../context/AuthContext";
@@ -21,83 +30,73 @@ const validatePassword = (value) => {
 
 const validateEmail = (value) => {
   let error;
-  if (!value) {
-    error = "Please enter your email address";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = "Invalid email address";
-  }
+  if (!value) error = "Please enter your username";
+
+  // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+  //   error = "Invalid email address";
+  // }
   return error;
 };
 
-const Login = ({ history, loading, error, loginUserAction, ...props }) => {
+const Login = ({ history, ...props }) => {
   const { dispatch, auth } = useContext(AuthContext);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [email] = useState("demo@gogo.com");
-  const [isLoading, setisLoading] = useState(false);
+  const [email] = useState("");
+  const [loading, setLoading] = useState(false);
   const [isError, setisError] = useState(false);
   const [message, setMessage] = useState("");
+  const [information, setInformation] = useState(
+    atob((queryString.parse(props.location.search).m ?? "").toString()) ?? ""
+  );
+  const [visible, setVisible] = useState(true);
+
+  const initialValues = { email, password };
 
   useEffect(() => {
     if (auth !== null) {
       if (auth.isAuth) {
-        props.history.push("/app");
+        history.push("/app");
       }
+      if (auth?.message !== "")
+        setInformation(auth?.message !== "" ? atob(auth?.message ?? "") : "");
     }
   }, [auth, props]);
 
-  const onUserLogin = (values) => {
+  const onUserLogin = async (values) => {
+    setisError(false);
+    setMessage("");
     if (!loading) {
       if (values.email !== "" && values.password !== "") {
-        //loginUserAction(values, history);
-        dispatch(
-          AuthActionSuccess({
-            isAuth: false,
-            isError: false,
-            data: {},
-            session: { role: "User" },
-          })
-        );
-        history.push("/app");
+        setLoading(true);
+        const response = await LoginService({
+          email: values.email,
+          password: values.password,
+        });
+        setLoading(false);
+        setVisible(true);
+        if (response != null) {
+          if (response?.status == 200) {
+            dispatch(
+              AuthActionSuccess({
+                data: {
+                  token: response?.data?.token ?? "",
+                },
+                session: { role: "User" },
+                message: "",
+              })
+            );
+            if (response?.data?.tempPassword == null) history.push("/app");
+            else history.push("/password");
+          } else {
+            setisError(true);
+            setMessage(response?.data?.message ?? "");
+          }
+        } else {
+          setisError(true);
+          setMessage("Network Error");
+        }
       }
-    }
-  };
-
-  const initialValues = { email, password };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setisLoading(true);
-
-    const response = await LoginService({
-      email: userName,
-      password: password,
-    });
-
-    responseDisplay(response);
-  };
-
-  const responseDisplay = (response) => {
-    setUserName("");
-    setPassword("");
-
-    if (typeof response !== "undefined") {
-      setisLoading(false);
-
-      if (response.status == 200) {
-        dispatch(AuthActionSuccess(response));
-        props.history.push("/app");
-      } else {
-        setisError(true);
-        setMessage(response.data.message);
-      }
-      //redirect
-    } else {
-      setisLoading(false);
-
-      setisError(true);
-
-      setMessage("Network Error...Kindly check network");
     }
   };
 
@@ -112,7 +111,26 @@ const Login = ({ history, loading, error, loginUserAction, ...props }) => {
                 <span className="logo-single" />
               </NavLink>
               <CardTitle className="mb-4">
-                <IntlMessages id="user.login-title" />
+                {!isError && information !== "" && (
+                  <Alert
+                    color="info"
+                    className="rounded"
+                    isOpen={visible}
+                    toggle={() => setVisible(!visible)}
+                  >
+                    {information}
+                  </Alert>
+                )}
+                {isError && (
+                  <Alert
+                    color="danger"
+                    className="rounded"
+                    isOpen={visible}
+                    toggle={() => setVisible(!visible)}
+                  >
+                    {message}
+                  </Alert>
+                )}
               </CardTitle>
 
               <Formik initialValues={initialValues} onSubmit={onUserLogin}>
@@ -120,7 +138,7 @@ const Login = ({ history, loading, error, loginUserAction, ...props }) => {
                   <Form className="av-tooltip tooltip-label-bottom">
                     <FormGroup className="form-group has-float-label">
                       <Label>
-                        <IntlMessages id="user.email" />
+                        <IntlMessages id="user.username" />
                       </Label>
                       <Field
                         className="form-control"
@@ -163,7 +181,8 @@ const Login = ({ history, loading, error, loginUserAction, ...props }) => {
                           loading ? "show-spinner" : ""
                         }`}
                         size="lg"
-                        onClick={onUserLogin}
+                        type="submit"
+                        //onClick={onUserLogin}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />

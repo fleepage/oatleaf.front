@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //import ColorSwitcher from './components/common/ColorSwitcher';
 //import { NotificationContainer } from './components/common/react-notifications';
 import { adminRoot } from "./constants/defaultValues";
+import AccountContextProvider from "./context/AccountContext";
 import AuthContextProvider from "./context/AuthContext";
-import BillContextProvider from "./context/BillContext";
 import { getDirection } from "./helpers/Utils";
 import AppLocale from "./lang";
 import ProtectedRoute from "./route/ProtectedRoute";
@@ -63,7 +63,7 @@ class App extends React.Component {
 
     return (
       <AuthContextProvider>
-        <BillContextProvider>
+        <AccountContextProvider>
           <div className="h-100">
             <IntlProvider
               locale={currentAppLocale.locale}
@@ -119,7 +119,7 @@ class App extends React.Component {
               </>
             </IntlProvider>
           </div>
-        </BillContextProvider>
+        </AccountContextProvider>
       </AuthContextProvider>
     );
   }

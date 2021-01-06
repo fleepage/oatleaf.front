@@ -1,25 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import { injectIntl } from "react-intl";
-import { Row } from "reactstrap";
-import { Colxx, Separator } from "../../../component/common/CustomBootstrap";
-import Breadcrumb from "../../../component/navs/Breadcrumb";
-import GradientWithRadialProgressCard from "../../../component/cards/GradientWithRadialProgressCard";
-import { NavLink } from "react-router-dom";
 import LinesEllipsis from "react-lines-ellipsis";
 import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC";
-import ErcasTransactionTable from "../../../component/table/ErcasReactTable";
-import moment from "moment";
-import SupportPreview from "../../../component/authComponent/supportPreview";
-import ApplicationMenu from "../../../component/navs/ApplicationMenu";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import TopnavDarkSwitch from "../../../component/navs/Topnav.DarkSwitch";
-import { isDarkSwitchActive } from "../../../constants/defaultValues";
-import DashboardIconsCard from "../../../component/carousel/dashboardCards";
+import { Button, Row } from "reactstrap";
+import SupportPreview from "../../../component/authComponent/supportPreview";
 import SubCard from "../../../component/cards/IconCard";
+import DashboardIconsCard from "../../../component/carousel/dashboardCards";
+import { Colxx, Separator } from "../../../component/common/CustomBootstrap";
+import ApplicationMenu from "../../../component/navs/ApplicationMenu";
+import Breadcrumb from "../../../component/navs/Breadcrumb";
+import TopnavDarkSwitch from "../../../component/navs/Topnav.DarkSwitch";
+import ErcasTransactionTable from "../../../component/table/ErcasReactTable";
+import { isDarkSwitchActive } from "../../../constants/defaultValues";
+import { AccountContext } from "../../../context/AccountContext";
 
 const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
 const Admin = ({ intl, match, ...props }) => {
+  const accountContext = useContext(AccountContext);
   const { messages } = intl;
+
+  // useEffect(async () => {
+  //   console.log(accountContext.account);
+  // }, []);
+
   return (
     <>
       <Row className="app-row survey-app">
@@ -64,6 +68,17 @@ const Admin = ({ intl, match, ...props }) => {
             <ul className="list-unstyled mb-5">
               Dark Mode: {isDarkSwitchActive && <TopnavDarkSwitch />}
             </ul>
+          </div>
+          <div className="p-4">
+            <Button
+              block
+              color="primary"
+              size="xs"
+              className="mb-2"
+              onClick={() => props.history.push("/accounts")}
+            >
+              Switch Account
+            </Button>
           </div>
           <div className="p-4">
             <SubCard

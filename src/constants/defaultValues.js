@@ -59,14 +59,20 @@ export const colors = [
 export const LOGIN_SUCCESS = "LOGIN SUCCESS";
 export const LOGIN_FAILED = "LOGIN FAILED";
 export const LOGOUT = "LOGOUT";
+export const CLEARMESSAGE = "CLEAR MESSAGE";
+
+export const ADD_ACCOUNT = "ADD ACCOUNT";
+export const CLEAR_ACCOUNT = "CLEAR ACCOUNT";
+export const SELECTED_ACCOUNT = "SELECTED ACCOUNT";
+export const ACCOUNT_PERMISSION = "ACCOUNT PERMISSION";
 
 export const STORE_DETAILS = "STORE DETAILS";
 export const UPDATE_DETAILS = "UPDATE DETAILS";
 
-export const BASE_URL = "http://35.193.238.146/api";
+export const BASE_URL = "https://localhost:44319/api";
 export const BASE_GATEWAY_URL = "http://35.193.238.146/gateway";
-export const ADMIN_LOGIN_URL = `${BASE_GATEWAY_URL}/authenticate`;
-export const REGISTER_URL = `${BASE_GATEWAY_URL}/register`;
+export const ADMIN_LOGIN_URL = `${BASE_URL}/User/signin`;
+export const REGISTER_URL = `${BASE_URL}/User/signup`;
 
 export const MENU_SET_CLASSNAMES = "MENU_SET_CLASSNAMES";
 export const MENU_CONTAINER_ADD_CLASSNAME = "MENU_CONTAINER_ADD_CLASSNAME";

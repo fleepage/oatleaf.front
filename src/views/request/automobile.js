@@ -1,20 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
-
-import {
-  Row,
-  Card,
-  CardTitle,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-} from "reactstrap";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
+import { NavLink } from "react-router-dom";
+import { Card, Row } from "reactstrap";
 import { Colxx } from "../../component/common/CustomBootstrap";
-import IntlMessages from "../../helpers/IntlMessages";
-import MapWithAMarker from "../../component/common/maps";
 
 const Automobile = ({ lat = 0.0, long = 0.0, ...props }) => {
   const [email] = useState("demo@gogo.com");

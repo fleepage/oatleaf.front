@@ -17,7 +17,7 @@ const OrganisationCard = () => {
       <Colxx xxs="12">
         <Row>
           {orgCard.map((item, i) => (
-            <Colxx xxs="12" xs="6" lg="4">
+            <Colxx xxs="12" xs="6" lg="4" key={i}>
               <Card className="mb-4">
                 <div className="position-relative">
                   <CardImg

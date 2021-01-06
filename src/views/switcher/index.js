@@ -1,14 +1,10 @@
-import React, { Suspense, useEffect, useContext } from "react";
-import { Route, withRouter, Switch, Redirect } from "react-router-dom";
-import AppLayout from "../../layout/AppLayout";
-import MenuContextProvider from "../../context/MenuContext";
+import React, { Suspense, useContext } from "react";
+import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import { LogoutAction } from "../../actions/AuthAction";
+import { AccountContext } from "../../context/AccountContext";
 import { AuthContext } from "../../context/AuthContext";
-import PermissionedRoute from "../../route/PermissionedRoute";
-import { UserRole } from "../../constants/authHelper";
-import menuItems from "../../constants/menu";
+import MenuContextProvider from "../../context/MenuContext";
 import SwitchLayout from "../../layout/SwitchLayout";
-
 // import { ProtectedRoute, UserRole } from '../../helpers/authHelper';
 
 const Account = React.lazy(() =>
@@ -20,10 +16,22 @@ const FourOfour = React.lazy(() =>
 );
 
 const Switcher = ({ match, ...props }) => {
-  const { dispatch, auth } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const accountContext = useContext(AccountContext);
+
+  // useEffect(async () => {
+  //   var _accounts = await MyAccountsService({
+  //     token: authContext.auth.data.token,
+  //   });
+  //   if (_accounts != undefined) {
+  //     accountContext.dispatch(AddAccount({ data: _accounts.data }));
+  //   } else {
+  //     accountContext.dispatch(AddAccount({ data: {} }));
+  //   }
+  // }, []);
 
   const handleLogout = () => {
-    dispatch(LogoutAction());
+    authContext.dispatch(LogoutAction({ message: "" }));
   };
 
   return (

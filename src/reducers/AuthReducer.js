@@ -1,12 +1,18 @@
-import { LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT } from "../constants/defaultValues";
+import {
+  CLEARMESSAGE,
+  LOGIN_FAILED,
+  LOGIN_SUCCESS,
+  LOGOUT,
+} from "../constants/defaultValues";
 
 export const AuthReducer = (state, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        isAuth: action.payload.status==200,
+        isAuth: true,
         isError: false,
+        message: "",
         data: action.payload.data,
       };
     case LOGOUT:
@@ -15,6 +21,12 @@ export const AuthReducer = (state, action) => {
         isAuth: false,
         isError: false,
         data: {},
+        message: action.payload.message,
+      };
+    case CLEARMESSAGE:
+      return {
+        ...state,
+        message: action.payload.message,
       };
     case LOGIN_FAILED:
       //console.log("yes");
@@ -22,6 +34,7 @@ export const AuthReducer = (state, action) => {
         ...state,
         isAuth: false,
         isError: true,
+        message: "",
         data: action.payload,
       };
     default:
