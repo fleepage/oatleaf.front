@@ -40,7 +40,7 @@ import {
 } from "../../services/SchoolService";
 
 const SchoolSetup = ({ intl, match, ...props }) => {
-  const [stage, setStage] = useState(2);
+  const [stage, setStage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("..Loading stage Please wait...");
   const [ErrorMessage, setErrorMessage] = useState("");

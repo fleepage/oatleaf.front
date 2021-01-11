@@ -7,13 +7,18 @@ import {
 
 export const LoginService = async (payload) => {
   try {
+    var config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
     var data = {
       authenticateDto: {
         username: payload.email,
         password: payload.password,
       },
     };
-    let res = await axios.post(ADMIN_LOGIN_URL, data);
+    let res = await axios.post(ADMIN_LOGIN_URL, data, config);
     return res;
   } catch (error) {
     return error.response;
@@ -22,6 +27,11 @@ export const LoginService = async (payload) => {
 
 export const RegisterService = async (payload) => {
   try {
+    var config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
     const data = {
       registerDto: {
         firstName: payload.firstname,
@@ -33,7 +43,7 @@ export const RegisterService = async (payload) => {
       },
     };
     //console.log(data);
-    let res = await axios.post(REGISTER_URL, data);
+    let res = await axios.post(REGISTER_URL, data, config);
     return res;
   } catch (error) {
     return error.response;
