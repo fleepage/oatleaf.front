@@ -10,6 +10,7 @@ export const LoginService = async (payload) => {
     var config = {
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
     };
     var data = {
@@ -30,6 +31,7 @@ export const RegisterService = async (payload) => {
     var config = {
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
     };
     const data = {
@@ -56,6 +58,7 @@ export const MyAccountsService = async (payload) => {
       headers: {
         Authorization: `Bearer ${payload.token}`,
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
     };
     var data = {};
@@ -74,6 +77,7 @@ export const SelectAccountService = async (payload) => {
       headers: {
         Authorization: `Bearer ${payload.token}`,
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
     };
     var data = {
