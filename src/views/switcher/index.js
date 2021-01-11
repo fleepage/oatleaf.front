@@ -14,6 +14,18 @@ const Account = React.lazy(() =>
 const FourOfour = React.lazy(() =>
   import(/* webpackChunkName: "Bills" */ "./404")
 );
+const SchoolSetup = React.lazy(() =>
+  import(/* webpackChunkName: "Bills" */ "./../anonymous/schoolSetup")
+);
+const OrganisationSetup = React.lazy(() =>
+  import(/* webpackChunkName: "Bills" */ "./../anonymous/organisationSetup")
+);
+const FreelanceSetup = React.lazy(() =>
+  import(/* webpackChunkName: "Bills" */ "./../anonymous/freelanceSetup")
+);
+const ParentSetup = React.lazy(() =>
+  import(/* webpackChunkName: "Bills" */ "./../anonymous/parentSetup")
+);
 
 const Switcher = ({ match, ...props }) => {
   const authContext = useContext(AuthContext);
@@ -46,7 +58,22 @@ const Switcher = ({ match, ...props }) => {
                 path={`${match.url}/home`}
                 render={(props) => <Account {...props} />}
               />
-
+              <Route
+                path={`${match.url}/school/register`}
+                render={(props) => <SchoolSetup {...props} />}
+              />
+              <Route
+                path={`${match.url}/organisation/register`}
+                render={(props) => <OrganisationSetup {...props} />}
+              />
+              <Route
+                path={`${match.url}/freelance/register`}
+                render={(props) => <FreelanceSetup {...props} />}
+              />
+              <Route
+                path={`${match.url}/parent/setup`}
+                render={(props) => <ParentSetup {...props} />}
+              />
               <Route
                 path={`${match.url}/404`}
                 render={(props) => <FourOfour {...props} />}

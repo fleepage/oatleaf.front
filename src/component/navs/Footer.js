@@ -1,8 +1,8 @@
+import moment from "moment";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Row } from "reactstrap";
 import { Colxx } from "../common/CustomBootstrap";
-import moment from "moment";
 
 const Footer = () => {
   return (
@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="container-fluid">
           <Row>
             <Colxx xxs="12" sm="6">
-              <p className="mb-0 text-muted">ErcasConnect {moment().year()}</p>
+              <p className="mb-0 text-muted">Oatleaf.com {moment().year()}</p>
             </Colxx>
             <Colxx className="col-sm-6 d-none d-sm-block">
               <ul className="breadcrumb pt-0 pr-0 float-right">

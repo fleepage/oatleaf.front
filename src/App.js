@@ -32,10 +32,6 @@ const RequestApp = React.lazy(() =>
   import(/* webpackChunkName: "views-user" */ "./views/request")
 );
 
-const Completed = React.lazy(() =>
-  import(/* webpackChunkName: "views-error" */ "./views/anonymous/completed")
-);
-
 const FourOfour = React.lazy(() =>
   import(/* webpackChunkName: "views-error" */ "./views/switcher/404")
 );
@@ -99,11 +95,7 @@ class App extends React.Component {
                         component={RequestApp}
                         //render={(props) => <RequestApp {...props} />}
                       />
-                      <Route
-                        exact
-                        path="/completed"
-                        render={(props) => <Completed {...props} />}
-                      />
+
                       {/*
                   <Redirect exact from="/" to={adminRoot} />
                   */}

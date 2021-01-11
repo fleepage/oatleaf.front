@@ -16,76 +16,17 @@ import AdvancePhoneInput from "../component/common/AdvancePhoneInput";
 import { Colxx } from "../component/common/CustomBootstrap";
 import { AuthContext } from "../context/AuthContext";
 import IntlMessages from "../helpers/IntlMessages";
+import {
+  validateAgreed,
+  validateConfirmPassword,
+  validateEmail,
+  validateFName,
+  validateLName,
+  validatePassword,
+  validatePhone,
+} from "../helpers/Validator";
 import UserLayout from "../layout/UserLayout";
 import { RegisterService } from "../services/AuthService";
-
-const validateConfirmPassword = (pass, value) => {
-  let error = "";
-  if (pass && value) {
-    if (pass !== value) {
-      error = "Password not matched";
-    }
-  } else {
-    error = "Password not matched";
-  }
-  return error;
-};
-
-const validateAgreed = (value) => {
-  let error;
-  if (!value) error = "Accept our terms and condition to proceed";
-  return error;
-};
-
-const validatePassword = (value) => {
-  let error;
-  if (!value) {
-    error = "Please enter your password";
-  } else if (value.length < 4) {
-    error = "Value must be longer than 3 characters";
-  }
-  return error;
-};
-
-const validateFName = (value) => {
-  let error;
-  if (!value) {
-    error = "Please enter your firstname";
-  } else if (value.length < 3) {
-    error = "Value must be longer than 2 characters";
-  }
-  return error;
-};
-
-const validateLName = (value) => {
-  let error;
-  if (!value) {
-    error = "Please enter your lastname";
-  } else if (value.length < 3) {
-    error = "Value must be longer than 2 characters";
-  }
-  return error;
-};
-
-const validatePhone = (value) => {
-  let error;
-  if (!value) {
-    error = "Please enter your phone number";
-  } else if (value.length < 11) {
-    error = "Value must be longer than 10 characters";
-  }
-  return error;
-};
-
-const validateEmail = (value) => {
-  let error;
-  if (!value) {
-    error = "Please enter your email address";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = "Invalid email address";
-  }
-  return error;
-};
 
 const Register = ({ history, error, loginUserAction, ...props }) => {
   const authContext = useContext(AuthContext);

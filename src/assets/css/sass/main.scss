@@ -155,3 +155,29 @@ html {
 .phone-style:hover {
   background-color: "transparent";
 }
+
+.form-side-bordered {
+  border-left: 1px solid rgba(215, 215, 215, 0.5);
+}
+
+.validateAsync {
+  border-bottom: 1px solid rgba(215, 215, 215, 0.5);
+  color: #f1961d;
+  font-style: italic;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.menu-setup {
+  visibility: hidden;
+}
+
+.menu-setup-header:hover {
+  visibility: visible;
+
+  .menu-setup {
+    visibility: visible;
+  }
+}

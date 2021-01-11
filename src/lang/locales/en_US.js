@@ -61,6 +61,7 @@ module.exports = {
   "user.new-password-again": "New Password Again",
   "user.new-password": "New Password",
   "user.reset-password": "Reset Password",
+
   /* 03.Menu */
   "menu.home": "Home",
   "menu.app": "Home",
@@ -649,4 +650,29 @@ module.exports = {
   "wizard.prev": "Back",
   "wizard.registered": "Your registration completed successfully!",
   "wizard.async": "Async save for 3 seconds!",
+
+  /* 08 School */
+  "school.register": "Submit",
+  "school.name": "School Name",
+  "school.categoryname": "Class Category Name",
+  "school.country": "Country",
+  "school.region": "Region",
+  "school.founder": "School Founder",
+  "school.foundedat": "School Founded At",
+  "school.address": "School Address",
+  "school.email": "Contact Email",
+  "school.phone": "Contact Phone",
+  "school.description": "Description",
+  "school.identifier": "Unique Identifier",
+  "school.completeForm": "Full Form",
+  "school.shortForm": "Less Form",
+  "school.classSetup": "Setup Classes",
+  "school.calenderSetup": "Current Academic Calender",
+  "school.category": "New Category",
+  "school.classChoice": "Use This Template",
+  "school.categoryposition": "Position",
+  "school.currentTerm": "Current Term",
+  "school.startCalender": "Start Academic Calender",
+  "school.endCalendr": "End Academic Calender",
+  "school.logo": "School Logo",
 };

@@ -4,6 +4,7 @@ import { Button, Row } from "reactstrap";
 import { AddAccount } from "../../actions/AccountAction";
 import { LogoutAction } from "../../actions/AuthAction";
 import FreelanceCard from "../../component/cards/freelanceCards";
+import GradientCard from "../../component/cards/GradientCard";
 import GradientWithRadialProgressCard from "../../component/cards/GradientWithRadialProgressCard";
 import OrganisationCard from "../../component/cards/organisationCard";
 import SchoolCard from "../../component/cards/schoolCard";
@@ -139,43 +140,43 @@ const Account = ({ intl, match, ...props }) => {
         </Row>
         <Row>
           <Colxx lg="4" md="6" className="mb-4">
-            <GradientWithRadialProgressCard
+            <GradientCard
               icon="iconsminds-the-white-house"
               title={`Register A School`}
               detail={
                 "Do you have a school and want to transform it into a learning platform. Oatleaf will help you achieve that in few to no time."
               }
-              to="home"
+              to="school/register"
             />
           </Colxx>
-          <Colxx lg="4" md="6" className="mb-4">
-            <GradientWithRadialProgressCard
+          {/* <Colxx lg="4" md="6" className="mb-4">
+            <GradientCard
               icon="simple-icon-organization"
               title={`Create An Organisation`}
               detail={
                 "Use oatleaf platform to achieve your organisational goals."
               }
-              to="utility-bill"
+              to="organisation/register"
             />
-          </Colxx>
-          <Colxx lg="4" md="6" className="mb-4">
-            <GradientWithRadialProgressCard
+          </Colxx> */}
+          {/* <Colxx lg="4" md="6" className="mb-4">
+            <GradientCard
               icon="iconsminds-business-man-woman"
               title={`Enable Your Freelance Account`}
               detail={
                 "Enable your freelance account so that you can start reaching parent who are looking for home teachers for their kid(s)"
               }
-              to="utility-bill"
+              to="freelance/register"
             />
-          </Colxx>
+          </Colxx> */}
           <Colxx lg="4" md="6" className="mb-4">
-            <GradientWithRadialProgressCard
+            <GradientCard
               icon="iconsminds-business-man-woman"
               title={`Enable Parent Account`}
               detail={
                 "Enable parent account so that you can start managing your kid(s)"
               }
-              to="utility-bill"
+              to="parent/setup"
             />
           </Colxx>
         </Row>

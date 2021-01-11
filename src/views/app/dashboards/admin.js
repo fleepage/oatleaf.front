@@ -65,7 +65,7 @@ const Admin = ({ intl, match, ...props }) => {
               {/* <IntlMessages id="todo.status" /> */}
               Preference
             </p>
-            <ul className="list-unstyled mb-5">
+            <ul className="list-unstyled">
               Dark Mode: {isDarkSwitchActive && <TopnavDarkSwitch />}
             </ul>
           </div>

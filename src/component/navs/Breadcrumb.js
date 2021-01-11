@@ -1,12 +1,12 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
-import IntlMessages from '../../helpers/IntlMessages';
-import { adminRoot } from '../../constants/defaultValues';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { adminRoot } from "../../constants/defaultValues";
+import IntlMessages from "../../helpers/IntlMessages";
 
 const getMenuTitle = (sub) => {
-  if('/'+sub===adminRoot) return <IntlMessages id="menu.home" />;
+  if ("/" + sub === adminRoot) return <IntlMessages id="menu.home" />;
   return <IntlMessages id={`${sub}`} />;
 };
 
@@ -18,7 +18,7 @@ const BreadcrumbContainer = ({ heading, match }) => {
   return (
     <>
       {heading && (
-        <h1>
+        <h1 className="text-muted">
           <IntlMessages id={heading} />
         </h1>
       )}
@@ -29,9 +29,9 @@ const BreadcrumbContainer = ({ heading, match }) => {
 
 const BreadcrumbItems = ({ match }) => {
   const path = match.path.substr(1);
-  let paths = path.split('/');
-  if (paths[paths.length - 1].indexOf(':') > -1) {
-    paths = paths.filter((x) => x.indexOf(':') === -1);
+  let paths = path.split("/");
+  if (paths[paths.length - 1].indexOf(":") > -1) {
+    paths = paths.filter((x) => x.indexOf(":") === -1);
   }
   return (
     <>
@@ -40,7 +40,10 @@ const BreadcrumbItems = ({ match }) => {
           return (
             <BreadcrumbItem key={index} active={paths.length === index + 1}>
               {paths.length !== index + 1 ? (
-                <NavLink to={`/${getUrl(path, sub, index)}`}>
+                <NavLink
+                  to={`/${getUrl(path, sub, index)}`}
+                  style={{ color: "#3db264" }}
+                >
                   {getMenuTitle(sub)}
                 </NavLink>
               ) : (

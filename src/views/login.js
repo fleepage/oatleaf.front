@@ -15,25 +15,9 @@ import { AuthActionSuccess } from "../actions/AuthAction";
 import { Colxx } from "../component/common/CustomBootstrap";
 import { AuthContext } from "../context/AuthContext";
 import IntlMessages from "../helpers/IntlMessages";
+import { validatePassword, validateUsername } from "../helpers/Validator";
 import UserLayout from "../layout/UserLayout";
 import { LoginService } from "../services/AuthService";
-
-const validatePassword = (value) => {
-  let error;
-  if (!value) {
-    error = "Please enter your password";
-  } else if (value.length < 4) {
-    error = "Value must be longer than 3 characters";
-  }
-  return error;
-};
-
-const validateEmail = (value) => {
-  let error;
-  if (!value) error = "Please enter your username";
-  return error;
-};
-
 const Login = ({ history, ...props }) => {
   const { dispatch, auth } = useContext(AuthContext);
   const [userName, setUserName] = useState("");
@@ -139,7 +123,7 @@ const Login = ({ history, ...props }) => {
                       <Field
                         className="form-control"
                         name="email"
-                        validate={validateEmail}
+                        validate={validateUsername}
                       />
                       {errors.email && touched.email && (
                         <div className="invalid-feedback d-block">
