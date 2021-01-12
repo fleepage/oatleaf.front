@@ -318,6 +318,8 @@ const Registration = ({
       values.country !== "" &&
       values.region !== ""
     ) {
+      setLoader(true);
+      setMessager("Registering school...please wait");
       const response = await RegisterSchoolService({
         name: values.name,
         identifier: values.identifier.target.value,
@@ -331,8 +333,7 @@ const Registration = ({
         description: values.description,
         token: authContext.auth.data.token,
       });
-      setLoader(true);
-      setMessager("Registering school...please wait");
+
       if (response) {
         if (response?.status === 200) {
           if (response?.data?.isSuccess) {

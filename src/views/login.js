@@ -11,7 +11,7 @@ import {
   Label,
   Row,
 } from "reactstrap";
-import { AuthActionSuccess } from "../actions/AuthAction";
+import { AuthActionSuccess, ClearMessageAction } from "../actions/AuthAction";
 import { Colxx } from "../component/common/CustomBootstrap";
 import { AuthContext } from "../context/AuthContext";
 import IntlMessages from "../helpers/IntlMessages";
@@ -38,8 +38,10 @@ const Login = ({ history, ...props }) => {
       if (auth.isAuth) {
         history.push("/app");
       }
-      if (auth?.message !== "")
+      if (auth?.message !== "") {
         setInformation(auth?.message !== "" ? atob(auth?.message ?? "") : "");
+        dispatch(ClearMessageAction({ message: "" }));
+      }
     }
   }, [auth, props]);
 
