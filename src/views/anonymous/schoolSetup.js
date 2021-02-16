@@ -1,10 +1,9 @@
 import CheckIcon from "@material-ui/icons/Check";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { Field, Form, Formik } from "formik";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import LoadingOverlay from "react-loading-overlay";
-import "react-phone-input-2/lib/style.css";
 import { NavLink } from "react-router-dom";
 import {
   Alert,
@@ -15,10 +14,15 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import Modal from "reactstrap/lib/Modal";
+import ModalBody from "reactstrap/lib/ModalBody";
+import { ClearCurrentSchool } from "../../actions/AccountAction";
 import ClassSetupCard from "../../component/cards/ClassSetupCard";
 import AdvancePhoneInput from "../../component/common/AdvancePhoneInput";
 import { Colxx, Separator } from "../../component/common/CustomBootstrap";
+import ImageCropper from "../../component/common/ImageCropper";
 import Breadcrumb from "../../component/navs/Breadcrumb";
+import { AccountContext } from "../../context/AccountContext";
 import { AuthContext } from "../../context/AuthContext";
 import IntlMessages from "../../helpers/IntlMessages";
 import {
@@ -35,21 +39,67 @@ import {
   validateValuelessName,
 } from "../../helpers/Validator";
 import {
+  LogoUploadService,
+  MakeCalenderService,
   RegisterSchoolService,
   VerifyIdentifierService,
 } from "../../services/SchoolService";
-
-const SchoolSetup = ({ intl, match, ...props }) => {
-  const [stage, setStage] = useState(1);
+const SchoolSetup = ({
+  intl,
+  match,
+  school = 0,
+  setup = 0,
+  percentage = 0,
+  ...props
+}) => {
+  const authContext = useContext(AuthContext);
+  const accountContext = useContext(AccountContext);
+  const percent =
+    (accountContext.account &&
+      accountContext.account.school &&
+      accountContext.account.school.percentage) ||
+    0;
+  const scid =
+    (accountContext.account &&
+      accountContext.account.school &&
+      accountContext.account.school.id) ||
+    0;
+  const sid =
+    (accountContext.account &&
+      accountContext.account.school &&
+      accountContext.account.school.setupId) ||
+    0;
+  const [stage, setStage] = useState(
+    percent === 0
+      ? 1
+      : percent === 40
+      ? 2
+      : percent === 70
+      ? 3
+      : percent === 80
+      ? 4
+      : 1
+  );
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("/assets/img/utilities/school.png");
+  const [schoolId, setSchoolId] = useState(scid);
+  const [setupId, setSetupId] = useState(sid);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("..Loading stage Please wait...");
   const [ErrorMessage, setErrorMessage] = useState("");
   const [visible, setVisible] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
+  useEffect(() => {
+    accountContext.dispatch(ClearCurrentSchool());
+    // console.log(accountContext ?? []);
+    // console.log(percent);
+    // console.log(scid);
+    // console.log(sid);
+  }, []);
   const Next = () => {
     setStage(stage + 1);
-    console.log(stage);
+    //console.log(stage);
   };
 
   const renderStage = (param) => {
@@ -63,6 +113,11 @@ const SchoolSetup = ({ intl, match, ...props }) => {
             setError={setErrorMessage}
             setVisibled={setVisible}
             isSuccess={setIsSuccess}
+            token={authContext.auth.data.token}
+            setSchoolId={setSchoolId}
+            setSetupId={setSetupId}
+            namer={setName}
+            {...props}
           />
         );
       case 2:
@@ -74,6 +129,10 @@ const SchoolSetup = ({ intl, match, ...props }) => {
             setError={setErrorMessage}
             setVisibled={setVisible}
             isSuccess={setIsSuccess}
+            token={authContext.auth.data.token}
+            school={schoolId}
+            setup={setupId}
+            {...props}
           />
         );
       case 3:
@@ -85,6 +144,10 @@ const SchoolSetup = ({ intl, match, ...props }) => {
             setError={setErrorMessage}
             setVisibled={setVisible}
             isSuccess={setIsSuccess}
+            token={authContext.auth.data.token}
+            school={schoolId}
+            setup={setupId}
+            {...props}
           />
         );
       case 4:
@@ -96,6 +159,11 @@ const SchoolSetup = ({ intl, match, ...props }) => {
             setError={setErrorMessage}
             setVisibled={setVisible}
             isSuccess={setIsSuccess}
+            token={authContext.auth.data.token}
+            school={schoolId}
+            setup={setupId}
+            imager={setImage}
+            {...props}
           />
         );
       case 5:
@@ -107,6 +175,9 @@ const SchoolSetup = ({ intl, match, ...props }) => {
             setError={setErrorMessage}
             setVisibled={setVisible}
             isSuccess={setIsSuccess}
+            croppedImage={image}
+            name={name}
+            {...props}
           />
         );
       default:
@@ -272,9 +343,12 @@ const Registration = ({
   setError,
   setVisibled,
   isSuccess,
+  token,
+  setSchoolId,
+  setSetupId,
+  namer,
   ...props
 }) => {
-  const authContext = useContext(AuthContext);
   const [email] = useState("");
   const [founder] = useState("");
   const [foundedAt] = useState("");
@@ -331,16 +405,20 @@ const Registration = ({
         foundedAt: values.foundedAt,
         founder: values.founder,
         description: values.description,
-        token: authContext.auth.data.token,
+        token: token,
       });
 
       if (response) {
         if (response?.status === 200) {
           if (response?.data?.isSuccess) {
+            //console.log(response?.data);
             isSuccess(true);
             setLoader(false);
             setVisibled(true);
             setError(response?.data?.message ?? "process Completed");
+            setSchoolId(response?.data?.schoolId);
+            setSetupId(response?.data?.setupId);
+            namer(values.name);
             next();
           } else {
             isSuccess(false);
@@ -373,15 +451,15 @@ const Registration = ({
   };
 
   const handleIdentifierCheck = async (value) => {
-    if (value.target.value.length > 3) {
+    if (value.target.value.length > 3 && value.target.value.length < 6) {
       setIsTaken(2);
       setIdentifierMessage("checking identifier...");
       var response = await VerifyIdentifierService({
         identifier: value.target.value,
-        token: authContext?.auth?.data?.token,
+        token: token,
       });
       if (response) {
-        console.log(response);
+        //console.log(response);
         if (response?.status == 200) {
           if (response?.data?.isExisting) {
             setIsTaken(2);
@@ -403,7 +481,7 @@ const Registration = ({
     } else {
       set_Color("#f1961d");
       setIsTaken(0);
-      setIdentifierMessage("Length must be greater than 3");
+      setIdentifierMessage("character Length must be between 3 and 5");
     }
   };
 
@@ -672,8 +750,16 @@ const ClassSetup = ({
   setMessager,
   setError,
   setVisibled,
+  isSuccess,
+  token,
+  school,
+  setup,
   ...props
 }) => {
+  // useEffect(() => {
+  //   console.log(`${setup} ${school}`);
+  // }, []);
+
   const pricesData = [
     {
       icon: "iconsminds-male",
@@ -684,38 +770,38 @@ const ClassSetup = ({
       link: "#",
       features: [
         {
-          name: "Nursery",
-          classes: [
-            { class: 1, subClass: ["A"] },
-            { class: 2, subClass: ["A"] },
-            { class: 3, subClass: ["A"] },
+          groupName: "Nursery",
+          classCategorys: [
+            { stage: 1, classCategoryItems: [{ stage: "A" }] },
+            { stage: 2, classCategoryItems: [{ stage: "A" }] },
+            { stage: 3, classCategoryItems: [{ stage: "A" }] },
           ],
         },
         {
-          name: "Primary",
-          classes: [
-            { class: 1, subClass: ["A"] },
-            { class: 2, subClass: ["A"] },
-            { class: 3, subClass: ["A"] },
-            { class: 4, subClass: ["A"] },
-            { class: 5, subClass: ["A"] },
-            { class: 6, subClass: ["A"] },
+          groupName: "Primary",
+          classCategorys: [
+            { stage: 1, classCategoryItems: [{ stage: "A" }] },
+            { stage: 2, classCategoryItems: [{ stage: "A" }] },
+            { stage: 3, classCategoryItems: [{ stage: "A" }] },
+            { stage: 4, classCategoryItems: [{ stage: "A" }] },
+            { stage: 5, classCategoryItems: [{ stage: "A" }] },
+            { stage: 6, classCategoryItems: [{ stage: "A" }] },
           ],
         },
         {
-          name: "JSS",
-          classes: [
-            { class: 1, subClass: ["A"] },
-            { class: 2, subClass: ["A"] },
-            { class: 3, subClass: ["A"] },
+          groupName: "JSS",
+          classCategorys: [
+            { stage: 1, classCategoryItems: [{ stage: "A" }] },
+            { stage: 2, classCategoryItems: [{ stage: "A" }] },
+            { stage: 3, classCategoryItems: [{ stage: "A" }] },
           ],
         },
         {
-          name: "SSS",
-          classes: [
-            { class: 1, subClass: ["A"] },
-            { class: 2, subClass: ["A"] },
-            { class: 3, subClass: ["A"] },
+          groupName: "SSS",
+          classCategorys: [
+            { stage: 1, classCategoryItems: [{ stage: "A" }] },
+            { stage: 2, classCategoryItems: [{ stage: "A" }] },
+            { stage: 3, classCategoryItems: [{ stage: "A" }] },
           ],
         },
       ],
@@ -749,7 +835,18 @@ const ClassSetup = ({
               className="col-item mb-4"
               key={`priceCard_${index}`}
             >
-              <ClassSetupCard data={item} templateFunc={handleUseTemplate} />
+              <ClassSetupCard
+                data={item}
+                next={next}
+                setLoader={setLoader}
+                setMessager={setMessager}
+                setError={setError}
+                setVisibled={setVisibled}
+                isSuccess={isSuccess}
+                token={token}
+                schoolId={school}
+                setupId={setup}
+              />
             </Colxx>
           );
         })}
@@ -760,16 +857,19 @@ const ClassSetup = ({
 
 const SetupCalender = ({
   intl,
-  match,
   next,
   setLoader,
   setMessager,
   setError,
   setVisibled,
+  isSuccess,
+  token,
+  school,
+  setup,
   ...props
 }) => {
-  const [startYear] = useState("");
-  const [endYear] = useState("");
+  const [startYear] = useState(new Date().getFullYear() - 1 + "");
+  const [endYear] = useState(new Date().getFullYear() + "");
   const [term] = useState("");
   const [syear] = useState(new Date().getFullYear() - 1);
   const [eyear] = useState(new Date().getFullYear());
@@ -780,8 +880,61 @@ const SetupCalender = ({
     term,
   };
 
-  const handleCalenderStup = (values) => {
-    next();
+  const handleCalenderStup = async (values) => {
+    setLoader(true);
+    setMessager("Adding Academic Calender...please wait");
+    const response = await MakeCalenderService({
+      data: {
+        sessionDto: {
+          setupId: setup,
+          schoolId: school,
+          startYear: values.startYear,
+          endYear: values.endYear,
+          isActive: true,
+          term: {
+            setupId: setup,
+            sessionId: 0,
+            name:
+              values.term === "1"
+                ? "First Term"
+                : values.term === "2"
+                ? "Second Term"
+                : "Third Term",
+            label: eval(values.term),
+            isActive: true,
+          },
+        },
+      },
+      token: token,
+    });
+    if (response) {
+      if (response?.status === 200) {
+        if (response?.data?.isSuccess) {
+          //console.log(response?.data);
+          isSuccess(true);
+          setLoader(false);
+          setVisibled(true);
+          setError(response?.data?.message ?? "process Completed");
+
+          next();
+        } else {
+          isSuccess(false);
+          setLoader(false);
+          setVisibled(true);
+          setError(response?.data?.message ?? "Error Encounter");
+        }
+      } else {
+        isSuccess(false);
+        setLoader(false);
+        setVisibled(true);
+        setError(response?.data?.message ?? "Error Encounter");
+      }
+    } else {
+      isSuccess(false);
+      setLoader(false);
+      setVisibled(true);
+      setError("Error Encounter");
+    }
   };
 
   return (
@@ -877,16 +1030,112 @@ const SetupCalender = ({
 
 const WrapUp = ({
   intl,
-  match,
   next,
   setLoader,
   setMessager,
   setError,
   setVisibled,
+  isSuccess,
+  token,
+  school,
+  setup,
+  imager,
   ...props
 }) => {
-  const handleLogoSubmit = () => {
-    next();
+  const [croppedImage, setCroppedImage] = useState(
+    "/assets/img/utilities/school.png"
+  );
+  const [file, setFile] = useState();
+  const [blob, setBlob] = useState(false);
+  const [inputImg, setInputImg] = useState("");
+  const [showEditor, setShowEditor] = useState(false);
+  const fileUpload = React.useRef(null);
+  const getBlob = (blob) => {
+    // pass blob up from the ImageCropper component
+    dataURLtoFile(blob, "logo.png");
+    setBlob(true);
+    handleResetLogoUpload();
+    //console.log(blob);
+  };
+
+  const dataURLtoFile = (blober, filename) => {
+    const image = new File([blober], filename, {
+      lastModifiedDate: new Date(),
+      type: blober.type,
+    });
+    setFile(image);
+    setCroppedImage(URL.createObjectURL(image));
+  };
+
+  const onInputChange = (e) => {
+    // convert image file to base64 string
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener(
+      "load",
+      () => {
+        setInputImg(reader.result);
+        setShowEditor(true);
+      },
+      false
+    );
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleLogoUpload = () => {
+    fileUpload.current.click();
+  };
+
+  const handleResetLogoUpload = () => {
+    fileUpload.current.value = null;
+    setInputImg("");
+  };
+
+  const handleSubmitImage = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleLogoUploadToServer = async () => {
+    setLoader(true);
+    setMessager("Uploading Logo...please wait");
+    const response = await LogoUploadService({
+      img: file,
+      school: school,
+      token: token,
+    });
+
+    if (response) {
+      if (response?.status === 200) {
+        if (response?.data?.isSuccess) {
+          //console.log(response?.data);
+          isSuccess(true);
+          setLoader(false);
+          setVisibled(true);
+          setError(response?.data?.message ?? "process Completed");
+          imager(croppedImage);
+          next();
+        } else {
+          isSuccess(false);
+          setLoader(false);
+          setVisibled(true);
+          setError(response?.data?.message ?? "Error Encounter");
+        }
+      } else {
+        isSuccess(false);
+        setLoader(false);
+        setVisibled(true);
+        setError(response?.data?.message ?? "Error Encounter..");
+      }
+    } else {
+      isSuccess(false);
+      setLoader(false);
+      setVisibled(true);
+      setError("Error Encounter.");
+    }
   };
 
   const handleLogoSkip = () => {
@@ -894,30 +1143,62 @@ const WrapUp = ({
   };
 
   return (
-    <div>
+    <>
       <Row className=" mb-5 text-center">
-        <Colxx xxs="12">
+        {/* <Colxx xxs="12">
           <CardTitle className="text-muted">
             <IntlMessages id="school.logo" />
           </CardTitle>
-        </Colxx>
-        <Colxx md="12" lg="12" className="col-item mb-4 ">
-          logo
+        </Colxx> */}
+        <Colxx md="12" lg="12" className="col-item mb-0 ">
+          <img src={croppedImage} className="rounded-circle" width="200px" />
+          {blob && (
+            <p>
+              <NavLink to="#" onClick={handleLogoUpload}>
+                Change
+              </NavLink>
+            </p>
+          )}
         </Colxx>
       </Row>
-      <Row className=" mb-5 text-center">
-        <Colxx md="12" lg="6" className="col-item mb-4 ">
-          <Button color="primary" onClick={handleLogoSubmit}>
-            Submit
+
+      <Row style={{ display: !blob ? "block" : "none" }}>
+        <Colxx xxs="12" className="text-center">
+          <Button onClick={handleLogoUpload}>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={onInputChange}
+              style={{ display: "none" }}
+              ref={fileUpload}
+            />
+            Select Logo
           </Button>
         </Colxx>
-        <Colxx md="12" lg="6" className="col-item mb-4 ">
-          <Button color="light" onClick={handleLogoSkip}>
-            Skip
-          </Button>
-        </Colxx>
-      </Row>{" "}
-    </div>
+      </Row>
+      {/* <input type="file" onChange={handleSubmitImage} /> */}
+      {blob && (
+        <Row>
+          <Colxx xxs="12" className="text-center">
+            <Button onClick={handleLogoUploadToServer}>Next</Button>
+          </Colxx>
+        </Row>
+      )}
+      <Row>
+        {inputImg && showEditor && (
+          <Modal isOpen={showEditor}>
+            <ModalBody>
+              <ImageCropper
+                getBlob={getBlob}
+                inputImg={inputImg}
+                isEditor={setShowEditor}
+                clear={handleResetLogoUpload}
+              />
+            </ModalBody>
+          </Modal>
+        )}
+      </Row>
+    </>
   );
 };
 
@@ -929,6 +1210,8 @@ const GetStarted = ({
   setMessager,
   setError,
   setVisibled,
+  croppedImage,
+  name,
   ...props
 }) => {
   const handleLogoSubmit = () => {
@@ -936,20 +1219,28 @@ const GetStarted = ({
   };
 
   const handleLogoSkip = () => {
-    next();
+    props.history.push("/accounts");
   };
 
   return (
     <div>
       <Row className=" mb-5 text-center">
         <Colxx xxs="12">
-          <CardTitle className="text-muted">
-            <IntlMessages id="school.logo" />
-          </CardTitle>
+          <p>
+            <img src={croppedImage} className="rounded-circle" width="200px" />
+          </p>
+
+          <p>
+            <h1>{name}</h1>
+          </p>
         </Colxx>
         <Colxx md="12" lg="12" className="col-item mb-4 ">
-          <Button color="light" onClick={handleLogoSkip}>
-            Skip
+          <p>
+            School setup has been completed successfully, You can now proceed to
+            your dashboard for futher actions. Thank you.
+          </p>
+          <Button color="primary" onClick={handleLogoSkip}>
+            Get Started
           </Button>
         </Colxx>
       </Row>

@@ -181,3 +181,38 @@ html {
     visibility: visible;
   }
 }
+
+.crop-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 80px;
+}
+
+.Crop-controls {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.Crop-App {
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.img-lg-thumbnail {
+  height: 200;
+}
+
+.primary-banner {
+  //background-color: #3db264;
+}

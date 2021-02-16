@@ -97,8 +97,8 @@ export const validateIdentifier = (value, isTaken) => {
   let error;
   if (!value || isTaken === 0) {
     error = "Please enter identifier.";
-  } else if (value.length > 65) {
-    error = "Value must be less than 64 characters";
+  } else if (value.length > 4) {
+    error = "Value must be less than 4 characters";
   } else if (isTaken === 2) {
     error = "This identifier has been taken";
   } else if (isTaken === 3) {

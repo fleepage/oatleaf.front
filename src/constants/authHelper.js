@@ -11,6 +11,7 @@ const UserRole = {
     { name: "event", level: "rw" },
     { name: "financials", level: "rw" },
     { name: "store", level: "rw" },
+    { name: "cbt", level: "rw" },
   ],
   Teacher: [
     { name: "work", level: "rw" },

@@ -1,45 +1,23 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-use-before-define */
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { injectIntl } from "react-intl";
-
-import {
-  UncontrolledDropdown,
-  DropdownItem,
-  DropdownToggle,
-  DropdownMenu,
-  Input,
-} from "reactstrap";
-
 import { NavLink } from "react-router-dom";
-import ThumbnailLetters from "../cards/ThumbnailLetters";
-
-import IntlMessages from "../../helpers/IntlMessages";
-
 import {
-  setContainerClassnames,
-  clickOnMobileMenu,
-  logoutUser,
-  changeLocale,
-} from "../../actions/MenuActions";
-
-import { MenuContext } from "../../context/MenuContext";
-
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Input,
+  UncontrolledDropdown,
+} from "reactstrap";
 import {
+  adminRoot,
   menuHiddenBreakpoint,
   searchPath,
-  localeOptions,
-  isDarkSwitchActive,
-  buyUrl,
-  adminRoot,
 } from "../../constants/defaultValues";
-
-import { MobileMenuIcon, MenuIcon } from "../../component/svg";
-import TopnavEasyAccess from "./Topnav.EasyAccess";
-import TopnavDarkSwitch from "./Topnav.DarkSwitch";
-
-import { getDirection, setDirection } from "../../helpers/Utils";
+import { MenuContext } from "../../context/MenuContext";
+import ThumbnailLetters from "../cards/ThumbnailLetters";
 
 const SwitchNav = ({
   intl,
@@ -204,7 +182,7 @@ const SwitchNav = ({
             <i className="simple-icon-magnifier" />
           </span>
         </div>
-        <div className="d-inline-block">
+        {/* <div className="d-inline-block">
           <UncontrolledDropdown className="ml-2">
             <DropdownToggle
               caret
@@ -227,7 +205,7 @@ const SwitchNav = ({
               })}
             </DropdownMenu>
           </UncontrolledDropdown>
-        </div>
+        </div> */}
       </div>
       <NavLink className="navbar-logo" to={adminRoot}>
         <span className="logo d-none d-xs-block" />

@@ -93,3 +93,21 @@ export const SelectAccountService = async (payload) => {
     return error.response;
   }
 };
+
+export const EnableParentService = async (payload) => {
+  try {
+    var config = {
+      headers: {
+        Authorization: `Bearer ${payload.token}`,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+    let res = await axios.get(`${BASE_URL}/Parents/enable`, config);
+
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};

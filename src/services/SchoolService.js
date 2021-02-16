@@ -59,3 +59,66 @@ export const RegisterSchoolService = async (payload) => {
     return error.response;
   }
 };
+
+export const BuildClassesService = async (payload) => {
+  try {
+    var config = {
+      headers: {
+        Authorization: `Bearer ${payload.token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    let res = await axios.post(
+      `${BASE_URL}/School/buildClasses`,
+      payload.data,
+      config
+    );
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const MakeCalenderService = async (payload) => {
+  console.log(payload);
+  try {
+    var config = {
+      headers: {
+        Authorization: `Bearer ${payload.token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    let res = await axios.post(
+      `${BASE_URL}/School/MakeCalender`,
+      payload.data,
+      config
+    );
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const LogoUploadService = async (payload) => {
+  //console.log(payload.img);
+  try {
+    const formData = new FormData();
+    formData.append("logoDto.Logo", payload.img);
+    formData.append("logoDto.School", payload.school);
+    var config = {
+      headers: {
+        Authorization: `Bearer ${payload.token}`,
+        "content-type": "multipart/form-data",
+        Accept: "*/*",
+      },
+    };
+
+    let res = await axios.post(`${BASE_URL}/School/logo`, formData, config);
+
+    //console.log(res.config);
+    return res;
+  } catch (error) {
+    //console.log(error);
+    return error.response;
+  }
+};

@@ -1,7 +1,9 @@
 import {
   ACCOUNT_PERMISSION,
   ADD_ACCOUNT,
+  ADD_CURRENT_SCHOOL,
   CLEAR_ACCOUNT,
+  CLEAR_CURRENT_SCHOOL,
   SELECTED_ACCOUNT,
 } from "../constants/defaultValues";
 
@@ -16,6 +18,16 @@ export const AccountReducer = (state, action) => {
       return {
         ...state,
         account: action.payload.accountIndex,
+      };
+    case ADD_CURRENT_SCHOOL:
+      return {
+        ...state,
+        school: action.payload.school,
+      };
+    case CLEAR_CURRENT_SCHOOL:
+      return {
+        ...state,
+        school: {},
       };
     case ACCOUNT_PERMISSION:
       return {

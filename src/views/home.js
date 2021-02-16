@@ -5,6 +5,7 @@ import { scroller } from "react-scroll";
 import ServiceCard from "../component/cards/ServiceCard";
 import GlideComponent from "../component/carousel/GlideComponent";
 import { AuthContext } from "../context/AuthContext";
+import { getCurrentRadius, setCurrentRadius } from "../helpers/Utils";
 
 const slideSettings = {
   type: "carousel",
@@ -191,6 +192,7 @@ const Home = (props) => {
   const refSectionHome = useRef(null);
   const refSectionFooter = useRef(null);
   const [activeTab, setActiveTab] = useState(1);
+  const [radius, setRadius] = useState(getCurrentRadius());
 
   useEffect(() => {
     if (auth !== null) {
@@ -211,6 +213,15 @@ const Home = (props) => {
       };
     }
   }, [auth, props]);
+
+  useEffect(() => {
+    if (radius === "flat") {
+      document.body.classList.remove("rounded");
+    } else {
+      document.body.classList.add("rounded");
+    }
+    setCurrentRadius(radius);
+  }, [radius]);
 
   const onWindowResize = (event) => {
     const homeRect = refRowHome.current.getBoundingClientRect();

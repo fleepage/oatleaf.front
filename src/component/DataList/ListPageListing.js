@@ -1,0 +1,79 @@
+import React from "react";
+import { Row } from "reactstrap";
+import { Colxx } from "../common/CustomBootstrap";
+import ContextMenuContainer from "./ContextMenuContainer";
+import DataListView from "./DataListView";
+import ImageListView from "./ImageListView";
+import Pagination from "./Pagination";
+import ThumbListView from "./ThumbListView";
+
+function collect(props) {
+  return { data: props.data };
+}
+
+const ListPageListing = ({
+  items,
+  displayMode,
+  selectedItems,
+  onCheckItem,
+  currentPage,
+  totalPage,
+  onContextMenuClick,
+  onContextMenu,
+  onChangePage,
+}) => {
+  return (
+    <Row>
+      {items.length > 0 &&
+        items.map((product) => {
+          if (displayMode === "imagelist") {
+            return (
+              <ImageListView
+                key={product.id}
+                product={product}
+                isSelect={selectedItems.includes(product.id)}
+                collect={collect}
+                onCheckItem={onCheckItem}
+              />
+            );
+          }
+          if (displayMode === "thumblist") {
+            return (
+              <ThumbListView
+                key={product.id}
+                product={product}
+                isSelect={selectedItems.includes(product.id)}
+                collect={collect}
+                onCheckItem={onCheckItem}
+              />
+            );
+          }
+          return (
+            <DataListView
+              key={product.id}
+              product={product}
+              isSelect={selectedItems.includes(product.id)}
+              onCheckItem={onCheckItem}
+              collect={collect}
+            />
+          );
+        })}
+      {items.length === 0 && (
+        <Colxx xxs="12" className="text-center">
+          <h1>Empty</h1>
+        </Colxx>
+      )}
+      <Pagination
+        currentPage={currentPage}
+        totalPage={totalPage}
+        onChangePage={(i) => onChangePage(i)}
+      />
+      <ContextMenuContainer
+        onContextMenuClick={onContextMenuClick}
+        onContextMenu={onContextMenu}
+      />
+    </Row>
+  );
+};
+
+export default React.memo(ListPageListing);

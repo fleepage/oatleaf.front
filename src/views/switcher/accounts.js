@@ -3,11 +3,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Row } from "reactstrap";
 import { AddAccount } from "../../actions/AccountAction";
 import { LogoutAction } from "../../actions/AuthAction";
-import FreelanceCard from "../../component/cards/freelanceCards";
 import GradientCard from "../../component/cards/GradientCard";
 import GradientWithRadialProgressCard from "../../component/cards/GradientWithRadialProgressCard";
-import OrganisationCard from "../../component/cards/organisationCard";
-import SchoolCard from "../../component/cards/schoolCard";
+import ParentCard from "../../component/cards/ParentCard";
 import { Colxx, Separator } from "../../component/common/CustomBootstrap";
 import { AccountContext } from "../../context/AccountContext";
 import { AuthContext } from "../../context/AuthContext";
@@ -18,28 +16,43 @@ const Account = ({ intl, match, ...props }) => {
   const accountContext = useContext(AccountContext);
   const [accounts, setAccounts] = useState([]);
   const [refresh, setRefresh] = useState(true);
+  const [adminCount, setAdminCount] = useState(0);
+  const [hasParent, setHasParent] = useState(false);
 
-  useEffect(async () => {
-    var _accounts = await MyAccountsService({
-      token: authContext.auth.data.token,
-    });
-    if (_accounts != undefined) {
-      if (_accounts?.status === 200) {
-        accountContext.dispatch(
-          AddAccount({ data: _accounts.data?.myAccounts ?? [] })
-        );
-        setAccounts(accountContext.account.data ?? []);
-      } else {
-        authContext.dispatch(
-          LogoutAction({ message: `${btoa("Session has Expired.")}` })
-        );
-        //props.history.push(`/login?m=${btoa("Session Expired.")}`);
-      }
-    } else {
-      accountContext.dispatch(AddAccount({ data: {} }));
+  useEffect(() => {
+    async function fetchAccount() {
+      MyAccountsService({
+        token: authContext.auth.data.token,
+      }).then((_accounts) => {
+        if (_accounts != undefined) {
+          if (_accounts?.status === 200) {
+            const admins = _accounts.data?.myAccounts.filter(
+              (account) => account.schoolAdmin
+            );
+            const parent = _accounts.data?.myAccounts.filter(
+              (account) => account.parent
+            );
+            console.log(parent.length);
+            setAdminCount(admins.length);
+            setHasParent(parent.length > 0);
+            accountContext.dispatch(
+              AddAccount({ data: _accounts.data?.myAccounts ?? [] })
+            );
+            setAccounts(accountContext.account.data ?? []);
+          } else {
+            authContext.dispatch(
+              LogoutAction({ message: `${btoa("Session has Expired.")}` })
+            );
+          }
+        } else {
+          accountContext.dispatch(AddAccount({ data: {} }));
+        }
+        setRefresh(false);
+      });
     }
-    setRefresh(false);
-  }, [accounts, refresh]);
+
+    fetchAccount();
+  }, [refresh]);
 
   return (
     <>
@@ -86,30 +99,53 @@ const Account = ({ intl, match, ...props }) => {
               <Colxx lg="4" md="6" className="mb-4" key={i}>
                 {item.role == "OrgAdmin" ? (
                   <GradientWithRadialProgressCard
-                    icon="simple-icon-organization"
+                    icon="school.png"
                     title={`Admin at ${item.orgAdmin.organisation.name}`}
                     detail={`Click to access your organisation account. `}
                     to="home"
+                    name={item.orgAdmin.organisation.name}
                     selected={i}
                     accountId={item.id}
                     history={props.history}
                   />
                 ) : item.role == "Teacher" ? (
                   <GradientWithRadialProgressCard
-                    icon="iconsminds-the-white-house"
-                    title={`${item.role} at ${item.teachers.school.name}`}
+                    icon="school.png"
+                    title={`${item.role} at ${item.teachers.school.identifier}`}
+                    name={item.teachers.school.name}
                     detail={`Click to access your school account. `}
+                    school={item.teachers.school}
+                    active={item.isActive}
                     to="home"
+                    isAdmin={false}
+                    selected={i}
+                    accountId={item.id}
+                    history={props.history}
+                  />
+                ) : item.role == "Parent" ? (
+                  <ParentCard
+                    icon="school.png"
+                    title={`${item.role} Account`}
+                    //name={item.teachers.school.name}
+                    detail={`Click to access your parent account. `}
+                    //school={item.teachers.school}
+                    active={item.isActive}
+                    to="home"
+                    isAdmin={false}
                     selected={i}
                     accountId={item.id}
                     history={props.history}
                   />
                 ) : (
                   <GradientWithRadialProgressCard
-                    icon="iconsminds-the-white-house"
-                    title={`${item.role} at ${item.schoolAdmin.school.name}`}
+                    icon={item.schoolAdmin.school.logo ?? "school.png"}
+                    title={`${item.role} at ${item.schoolAdmin.school.identifier}`}
+                    name={item.schoolAdmin.school.name}
+                    active={item.isActive}
                     detail={`Click to access your school account. `}
                     to="home"
+                    isAdmin={true}
+                    school={item.schoolAdmin.school}
                     selected={i}
                     accountId={item.id}
                     history={props.history}
@@ -130,26 +166,31 @@ const Account = ({ intl, match, ...props }) => {
         )}
       </div>
 
-      <div className="section mb-10">
-        <Row>
-          <Colxx xxs="12">
-            <h1>Setup New Account</h1>
-            <p>You can setup new account.</p>
-            <Separator className="mb-5" />
-          </Colxx>
-        </Row>
-        <Row>
-          <Colxx lg="4" md="6" className="mb-4">
-            <GradientCard
-              icon="iconsminds-the-white-house"
-              title={`Register A School`}
-              detail={
-                "Do you have a school and want to transform it into a learning platform. Oatleaf will help you achieve that in few to no time."
-              }
-              to="school/register"
-            />
-          </Colxx>
-          {/* <Colxx lg="4" md="6" className="mb-4">
+      {!refresh && (
+        <div className="section mb-10">
+          {(adminCount < 4 || !hasParent) && (
+            <Row>
+              <Colxx xxs="12">
+                <h1>Setup New Account</h1>
+                <p>You can setup new account.</p>
+                <Separator className="mb-5" />
+              </Colxx>
+            </Row>
+          )}
+          <Row>
+            {adminCount < 4 && (
+              <Colxx lg="4" md="6" className="mb-4">
+                <GradientCard
+                  icon="iconsminds-the-white-house"
+                  title={`Register A School`}
+                  detail={
+                    "Do you have a school and want to transform it into a learning platform. Oatleaf will help you achieve that in few to no time."
+                  }
+                  to="school/register"
+                />
+              </Colxx>
+            )}
+            {/* <Colxx lg="4" md="6" className="mb-4">
             <GradientCard
               icon="simple-icon-organization"
               title={`Create An Organisation`}
@@ -159,7 +200,7 @@ const Account = ({ intl, match, ...props }) => {
               to="organisation/register"
             />
           </Colxx> */}
-          {/* <Colxx lg="4" md="6" className="mb-4">
+            {/* <Colxx lg="4" md="6" className="mb-4">
             <GradientCard
               icon="iconsminds-business-man-woman"
               title={`Enable Your Freelance Account`}
@@ -169,20 +210,23 @@ const Account = ({ intl, match, ...props }) => {
               to="freelance/register"
             />
           </Colxx> */}
-          <Colxx lg="4" md="6" className="mb-4">
-            <GradientCard
-              icon="iconsminds-business-man-woman"
-              title={`Enable Parent Account`}
-              detail={
-                "Enable parent account so that you can start managing your kid(s)"
-              }
-              to="parent/setup"
-            />
-          </Colxx>
-        </Row>
-      </div>
+            {!hasParent && (
+              <Colxx lg="4" md="6" className="mb-4">
+                <GradientCard
+                  icon="iconsminds-business-man-woman"
+                  title={`Enable Parent Account`}
+                  detail={
+                    "Enable parent account so that you can start managing your kid(s)"
+                  }
+                  to="parent/setup"
+                />
+              </Colxx>
+            )}
+          </Row>
+        </div>
+      )}
 
-      <div className="section mb-10">
+      {/* <div className="section mb-10">
         <Row>
           <Colxx xxs="12">
             <h1>School(s) on Oatleaf</h1>
@@ -199,9 +243,9 @@ const Account = ({ intl, match, ...props }) => {
             <SchoolCard />
           </Colxx>
         </Row>
-      </div>
+      </div> */}
 
-      <div className="section mb-10">
+      {/* <div className="section mb-10">
         <Row>
           <Colxx xxs="12">
             <h1>Freelance Teacher(s) on Oatleaf</h1>
@@ -218,9 +262,9 @@ const Account = ({ intl, match, ...props }) => {
             <FreelanceCard />
           </Colxx>
         </Row>
-      </div>
+      </div> */}
 
-      <div className="section mb-10">
+      {/* <div className="section mb-10">
         <Row>
           <Colxx xxs="12">
             <h1>Organisation(s) on Oatleaf</h1>
@@ -237,7 +281,7 @@ const Account = ({ intl, match, ...props }) => {
             <OrganisationCard />
           </Colxx>
         </Row>
-      </div>
+      </div> */}
     </>
   );
 };

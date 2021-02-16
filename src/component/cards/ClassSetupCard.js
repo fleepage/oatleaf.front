@@ -16,8 +16,20 @@ import {
 } from "reactstrap";
 import IntlMessages from "../../helpers/IntlMessages";
 import { validateName } from "../../helpers/Validator";
+import { BuildClassesService } from "../../services/SchoolService";
 
-const ClassSetupCard = ({ data, templateFunc }) => {
+const ClassSetupCard = ({
+  data,
+  schoolId,
+  setupId,
+  token,
+  next,
+  setLoader,
+  setMessager,
+  setError,
+  setVisibled,
+  isSuccess,
+}) => {
   const [classSetup, setClassSetup] = useState(data.features);
   const [categoryModal, setCategoryModal] = useState(false);
   const [isDefault] = useState(data.title === "Default");
@@ -57,18 +69,54 @@ const ClassSetupCard = ({ data, templateFunc }) => {
     index,
   };
 
-  const handleUseTemplate = () => {
-    templateFunc();
+  const BuildClasses = async () => {
+    const data = {
+      classesDto: {
+        schoolId: schoolId,
+        setupId: setupId,
+        classGroupDto: [...classSetup],
+      },
+    };
+    setLoader(true);
+    setMessager("Building Classes...please wait");
+    const response = await BuildClassesService({ token: token, data: data });
+    if (response) {
+      if (response?.status === 200) {
+        if (response?.data?.isSuccess) {
+          isSuccess(true);
+          setLoader(false);
+          setVisibled(true);
+          setError(response?.data?.message ?? "process Completed");
+          next();
+        } else {
+          isSuccess(false);
+          setLoader(false);
+          setVisibled(true);
+          setError(response?.data?.message ?? "Error Encounter");
+        }
+      } else {
+        isSuccess(false);
+        setLoader(false);
+        setVisibled(true);
+        setError(response?.data?.message ?? "Error Encounter");
+      }
+    } else {
+      isSuccess(false);
+      setLoader(false);
+      setVisibled(true);
+      setError("Error Encounter");
+    }
   };
+  const handleUseTemplate = () => {};
   const handleAdd = (values) => {
     setClassSetup([
       ...classSetup,
       {
-        name: values.name,
-        classes: [
+        groupName: values.name,
+        classCategorys: [
           {
-            class: 1,
-            subClass: ["A"],
+            stage: 1,
+            classCategoryItems: [{ stage: "A" }],
           },
         ],
       },
@@ -81,17 +129,20 @@ const ClassSetupCard = ({ data, templateFunc }) => {
   };
   const handleAddClass = (index) => {
     var temp = classSetup;
-    temp[index].classes.push({
-      class: temp[index].classes.length + 1,
-      subClass: ["A"],
+    temp[index].classCategorys.push({
+      stage: temp[index].classCategorys.length + 1,
+      classCategoryItems: [{ stage: "A" }],
     });
     setClassSetup(temp);
   };
   const handleAddSubClass = (pindex, cindex) => {
     var temp = classSetup;
-    temp[pindex].classes[cindex].subClass.push(
-      alphabeth[temp[pindex].classes[cindex].subClass.length]
-    );
+    temp[pindex].classCategorys[cindex].classCategoryItems.push({
+      stage:
+        alphabeth[
+          temp[pindex].classCategorys[cindex].classCategoryItems.length
+        ],
+    });
     setClassSetup(temp);
   };
 
@@ -103,12 +154,12 @@ const ClassSetupCard = ({ data, templateFunc }) => {
 
   const handleDeleteClass = (index) => {
     var temp = classSetup;
-    temp[index].classes.pop();
+    temp[index].classCategorys.pop();
     setClassSetup(temp);
   };
   const handleDeleteSubClass = (pindex, cindex) => {
     var temp = classSetup;
-    temp[pindex].classes[cindex].subClass.pop();
+    temp[pindex].classCategorys[cindex].classCategoryItems.pop();
     setClassSetup(temp);
   };
 
@@ -119,7 +170,14 @@ const ClassSetupCard = ({ data, templateFunc }) => {
           <h5 className="mb-0 font-weight-semibold color-theme-1 mb-4">
             {data.title}
           </h5>
+
           <p className="text-muted text-small">{data.detail}</p>
+          <p className="text-small">
+            <strong>Tip: </strong>{" "}
+            <span className="text-muted">
+              Hover on each item to take further action.
+            </span>
+          </p>
           {!isDefault && (
             <Button outline onClick={handleAddCategory}>
               <IntlMessages id="school.category" />{" "}
@@ -140,7 +198,7 @@ const ClassSetupCard = ({ data, templateFunc }) => {
                   >
                     <p className="mb-2">
                       <NavLink to="#" className="menu-setup-header">
-                        <span class="text-bold">{feature.name}</span>
+                        <span class="text-bold">{feature.groupName}</span>
                         &nbsp;
                         {!isDefault && (
                           <span className="menu-setup ">
@@ -164,7 +222,7 @@ const ClassSetupCard = ({ data, templateFunc }) => {
                       </NavLink>
                     </p>
                     <div>
-                      {feature.classes.map((klass, i) => {
+                      {feature.classCategorys.map((klass, i) => {
                         return (
                           <div
                             key={i}
@@ -176,7 +234,7 @@ const ClassSetupCard = ({ data, templateFunc }) => {
                           >
                             <p className="mb-2 text-bold">
                               <NavLink to="#" className="menu-setup-header">
-                                {feature.name + " " + klass.class}
+                                {feature.groupName + " " + klass.stage}
                                 &nbsp;
                                 <span className="menu-setup ">
                                   <Button
@@ -185,8 +243,8 @@ const ClassSetupCard = ({ data, templateFunc }) => {
                                   >
                                     new subclass
                                   </Button>{" "}
-                                  {feature.classes.length > 1 &&
-                                    feature.classes.length === i + 1 && (
+                                  {feature.classCategorys.length > 1 &&
+                                    feature.classCategorys.length === i + 1 && (
                                       <Button
                                         size="xs"
                                         onClick={() => handleDeleteClass(index)}
@@ -198,7 +256,7 @@ const ClassSetupCard = ({ data, templateFunc }) => {
                               </NavLink>
                             </p>
                             <div>
-                              {klass.subClass.map((subklass, ii) => {
+                              {klass.classCategoryItems.map((subklass, ii) => {
                                 return (
                                   <div key={ii} className="ml-2 mb-2">
                                     <p className="mb-2 ">
@@ -206,10 +264,11 @@ const ClassSetupCard = ({ data, templateFunc }) => {
                                         to="#"
                                         className="menu-setup-header"
                                       >
-                                        {klass.class + subklass}
+                                        {klass.stage + subklass.stage}
                                         &nbsp;
-                                        {klass.subClass.length > 1 &&
-                                          klass.subClass.length === ii + 1 && (
+                                        {klass.classCategoryItems.length > 1 &&
+                                          klass.classCategoryItems.length ===
+                                            ii + 1 && (
                                             <NavLink
                                               to="#"
                                               className="menu-setup "
@@ -238,7 +297,7 @@ const ClassSetupCard = ({ data, templateFunc }) => {
             </PerfectScrollbar>
           </div>
           <div className="text-center mt-5">
-            <Button onClick={handleUseTemplate}>
+            <Button onClick={BuildClasses}>
               <IntlMessages id="school.classChoice" />{" "}
             </Button>
           </div>

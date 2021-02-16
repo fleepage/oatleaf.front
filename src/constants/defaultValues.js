@@ -43,18 +43,7 @@ export const isDarkSwitchActive = true;
 export const defaultDirection = "ltr";
 export const themeRadiusStorageKey = "__theme_radius";
 export const isAuthGuardActive = false;
-export const colors = [
-  "bluenavy",
-  "blueyale",
-  "blueolympic",
-  "greenmoss",
-  "greenlime",
-  "purplemonster",
-  "orangecarrot",
-  "redruby",
-  "yellowgranola",
-  "greysteel",
-];
+export const colors = ["greenlime"];
 
 export const LOGIN_SUCCESS = "LOGIN SUCCESS";
 export const LOGIN_FAILED = "LOGIN FAILED";
@@ -65,11 +54,14 @@ export const ADD_ACCOUNT = "ADD ACCOUNT";
 export const CLEAR_ACCOUNT = "CLEAR ACCOUNT";
 export const SELECTED_ACCOUNT = "SELECTED ACCOUNT";
 export const ACCOUNT_PERMISSION = "ACCOUNT PERMISSION";
+export const ADD_CURRENT_SCHOOL = "ADD CURRENT SCHOOL";
+export const CLEAR_CURRENT_SCHOOL = "CLEAR CURRENT SCHOOL";
 
 export const STORE_DETAILS = "STORE DETAILS";
 export const UPDATE_DETAILS = "UPDATE DETAILS";
 
-export const BASE_URL = "https://api.oatleaf.com/api"; //"https://localhost:44319/api";
+export const BASE_URL = "https://localhost:44319/api";
+//export const BASE_URL = "https://api.oatleaf.com/api";
 
 //export const BASE_GATEWAY_URL = "http://35.193.238.146/gateway";
 export const ADMIN_LOGIN_URL = `${BASE_URL}/User/signin`;
@@ -81,3 +73,24 @@ export const MENU_CLICK_MOBILE_MENU = "MENU_CLICK_MOBILE_MENU";
 export const MENU_CHANGE_DEFAULT_CLASSES = "MENU_CHANGE_DEFAULT_CLASSES";
 export const MENU_CHANGE_HAS_SUB_ITEM_STATUS =
   "MENU_CHANGE_HAS_SUB_ITEM_STATUS";
+
+export const customStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
+  },
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    background: "rgba(0, 0, 0, 0)",
+    border: "none",
+    transform: "translate(-50%, -50%)",
+  },
+};

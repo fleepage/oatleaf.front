@@ -6,7 +6,11 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { adminRoot } from "./constants/defaultValues";
 import AccountContextProvider from "./context/AccountContext";
 import AuthContextProvider from "./context/AuthContext";
-import { getDirection } from "./helpers/Utils";
+import {
+  getCurrentRadius,
+  getDirection,
+  setCurrentRadius,
+} from "./helpers/Utils";
 import AppLocale from "./lang";
 import ProtectedRoute from "./route/ProtectedRoute";
 
@@ -51,6 +55,14 @@ class App extends React.Component {
       document.body.classList.add("ltr");
       document.body.classList.remove("rtl");
     }
+
+    const radius = getCurrentRadius();
+    if (radius === "flat") {
+      document.body.classList.remove("rounded");
+    } else {
+      document.body.classList.add("rounded");
+    }
+    setCurrentRadius(radius);
   }
 
   render() {

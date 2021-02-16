@@ -3,38 +3,36 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/display-name */
+import classnames from "classnames";
+import moment from "moment";
 import React, {
-  useState,
-  useEffect,
-  useRef,
   useCallback,
+  useEffect,
   useMemo,
+  useRef,
+  useState,
 } from "react";
+import LoadingOverlay from "react-loading-overlay";
+import { usePagination, useTable } from "react-table";
 import {
+  Button,
   Card,
   CardBody,
   CardTitle,
-  Table,
+  Collapse,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
   Input,
   InputGroup,
   InputGroupAddon,
-  Button,
   Row,
-  ButtonDropdown,
+  Table,
   UncontrolledDropdown,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  CustomInput,
-  Collapse,
 } from "reactstrap";
-import { Colxx } from "../common/CustomBootstrap";
-import { useTable, usePagination, useSortBy } from "react-table";
 import { HistoryService } from "../../services/HistoryService";
-import classnames from "classnames";
+import { Colxx } from "../common/CustomBootstrap";
 import DatatablePagination from "./DataTablePagination";
-import LoadingOverlay from "react-loading-overlay";
-import moment from "moment";
 
 function ErcasTable({
   columns,

@@ -21,7 +21,24 @@ const UtilityBills = React.lazy(() =>
 const History = React.lazy(() =>
   import(/* webpackChunkName: "History" */ "./dashboards/history")
 );
-
+const Students = React.lazy(() =>
+  import(/* webpackChunkName: "History" */ "./students")
+);
+const Staffs = React.lazy(() =>
+  import(/* webpackChunkName: "History" */ "./staffs")
+);
+const Parents = React.lazy(() =>
+  import(/* webpackChunkName: "History" */ "./parents")
+);
+const Assessment = React.lazy(() =>
+  import(/* webpackChunkName: "History" */ "./assessment")
+);
+const StudentDetail = React.lazy(() =>
+  import(/* webpackChunkName: "History" */ "./students/detail")
+);
+const Attendance = React.lazy(() =>
+  import(/* webpackChunkName: "History" */ "./attendance")
+);
 const Help = React.lazy(() => import(/* webpackChunkName: "Help" */ "./help"));
 
 const Receipt = React.lazy(() =>
@@ -75,6 +92,47 @@ const App = ({ match, ...props }) => {
                   permissionList={permissionList}
                   path={`${match.url}/history`}
                   component={(props) => <History {...props} />}
+                />
+
+                <PermissionedRoute
+                  permission={"student"}
+                  permissionList={permissionList}
+                  path={`${match.url}/students`}
+                  component={(props) => <Students {...props} />}
+                />
+
+                <PermissionedRoute
+                  permission={"student"}
+                  permissionList={permissionList}
+                  path={`${match.url}/student/detail`}
+                  component={(props) => <StudentDetail {...props} />}
+                />
+
+                <PermissionedRoute
+                  permission={"staff"}
+                  permissionList={permissionList}
+                  path={`${match.url}/staffs`}
+                  component={(props) => <Staffs {...props} />}
+                />
+
+                <PermissionedRoute
+                  permission={"parent"}
+                  permissionList={permissionList}
+                  path={`${match.url}/parents`}
+                  component={(props) => <Parents {...props} />}
+                />
+
+                <PermissionedRoute
+                  permission={"assessment"}
+                  permissionList={permissionList}
+                  path={`${match.url}/assessment`}
+                  component={(props) => <Assessment {...props} />}
+                />
+                <PermissionedRoute
+                  permission={"tools"}
+                  permissionList={permissionList}
+                  path={`${match.url}/attendance`}
+                  component={Attendance}
                 />
 
                 <Route
