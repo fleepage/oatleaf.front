@@ -1,15 +1,17 @@
+import { Card } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import Modal2 from "react-modal/lib/components/Modal";
-import { Button } from "reactstrap";
+import { Button, CardBody, CardTitle, Row, Table } from "reactstrap";
 import { setContainerClassnames } from "../../../actions/MenuActions";
 import IconCard from "../../../component/cards/IconCard";
 import Badger from "../../../component/common/badger";
+import { Colxx, Separator } from "../../../component/common/CustomBootstrap";
 import { customModalStyle } from "../../../component/common/modalStyle";
-import OatleafReactTable from "../../../component/table/TableCard";
+import Breadcrumb from "../../../component/navs/Breadcrumb";
 import { adminRoot } from "../../../constants/defaultValues";
 import { MenuContext } from "../../../context/MenuContext";
-import { FetchAdmissionService } from "../../../services/toolService";
-const Parent = ({ match, history, ...props }) => {
+
+const Settings = ({ match, history, ...props }) => {
   const menuContext = useContext(MenuContext);
   const [statModal, setStatModal] = useState(false);
 
@@ -97,26 +99,34 @@ const Parent = ({ match, history, ...props }) => {
 
   return (
     <>
-      <OatleafReactTable
-        showAdd
-        column={cols}
-        fetchService={FetchAdmissionService}
-        orderItems={orderOptions}
-        filterItems={filterOptions}
-        selectedFilter={selectedFilterOption}
-        selectedOrder={selectedOrderOption}
-        handleView={handleView}
-        searchService={FetchAdmissionService}
-        orderByService={FetchAdmissionService}
-        filterByService={FetchAdmissionService}
-        handleAddNew={handleAddNew}
-        addNewText={"Add Assessment"}
-        title={"Parent(s)"}
-        match={match}
-        idAccessor={"referenceKey"}
-        hasActionMenu={true}
-        handleShowStat={handleViewStat}
-      />
+      <Row>
+        <Colxx xxs="12">
+          <Breadcrumb heading="Settings" match={match} />
+          <Separator className="mb-5" />
+        </Colxx>
+      </Row>
+
+      <Card>
+        <CardBody>
+          <CardTitle></CardTitle>
+          <Table striped responsive className="mt-2">
+            <thead>
+              <th>Setting</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>display</td>
+                <td>on</td>
+              </tr>
+              <tr>
+                <td>sound</td>
+                <td>off</td>
+              </tr>
+            </tbody>
+          </Table>
+        </CardBody>
+      </Card>
       <Modal2
         isOpen={statModal}
         onRequestClose={() => setStatModal(!statModal)}
@@ -163,4 +173,4 @@ const Parent = ({ match, history, ...props }) => {
     </>
   );
 };
-export default Parent;
+export default Settings;

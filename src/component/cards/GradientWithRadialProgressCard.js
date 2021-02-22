@@ -146,7 +146,7 @@ const GradientWithRadialProgressCard = ({
               <p className="text-medium">{name}</p>
               <p
                 className="text-medium "
-                style={{ color: school.isBlocked ? "red" : "black" }}
+                style={{ color: school.isBlocked ? "red" : "" }}
               >
                 {school.isBlocked ? school.blockedMessage : detail}
               </p>

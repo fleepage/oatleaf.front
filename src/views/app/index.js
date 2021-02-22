@@ -12,15 +12,7 @@ import PermissionedRoute from "../../route/PermissionedRoute";
 const DashBoard = React.lazy(() =>
   import(/* webpackChunkName: "Bills" */ "./dashboards")
 );
-const StateBills = React.lazy(() =>
-  import(/* webpackChunkName: "StateBills" */ "./dashboards/stateBill")
-);
-const UtilityBills = React.lazy(() =>
-  import(/* webpackChunkName: "UtilityBills" */ "./dashboards/utilityBill")
-);
-const History = React.lazy(() =>
-  import(/* webpackChunkName: "History" */ "./dashboards/history")
-);
+
 const Students = React.lazy(() =>
   import(/* webpackChunkName: "History" */ "./students")
 );
@@ -39,10 +31,23 @@ const StudentDetail = React.lazy(() =>
 const Attendance = React.lazy(() =>
   import(/* webpackChunkName: "History" */ "./attendance")
 );
-const Help = React.lazy(() => import(/* webpackChunkName: "Help" */ "./help"));
 
-const Receipt = React.lazy(() =>
-  import(/* webpackChunkName: "Help" */ "./dashboards/receipt")
+const Admission = React.lazy(() =>
+  import(/* webpackChunkName: "History" */ "./admission")
+);
+
+const CBT = React.lazy(() => import(/* webpackChunkName: "History" */ "./cbt"));
+
+const ClassRoom = React.lazy(() =>
+  import(/* webpackChunkName: "History" */ "./classroom")
+);
+
+const Activity = React.lazy(() =>
+  import(/* webpackChunkName: "History" */ "./activity")
+);
+
+const Settings = React.lazy(() =>
+  import(/* webpackChunkName: "History" */ "./settings")
 );
 
 const App = ({ match, ...props }) => {
@@ -64,11 +69,6 @@ const App = ({ match, ...props }) => {
     }
   }, [role, permissionList]);
 
-  //const role = "Admin";
-  //const permission = accountContext?.account?.permissions;
-  //console.log(accountContext?.account?.permissions?.map((x) => x.permission));
-  //const permissionList = []; //permission.map((item, i) => item.name);
-
   const handleLogout = () => {
     dispatch(LogoutAction({ message: "" }));
   };
@@ -87,12 +87,12 @@ const App = ({ match, ...props }) => {
                   render={(props) => <DashBoard {...props} view={role} />}
                 />
 
-                <PermissionedRoute
+                {/* <PermissionedRoute
                   permission={"history"}
                   permissionList={permissionList}
                   path={`${match.url}/history`}
                   component={(props) => <History {...props} />}
-                />
+                /> */}
 
                 <PermissionedRoute
                   permission={"student"}
@@ -135,14 +135,39 @@ const App = ({ match, ...props }) => {
                   component={Attendance}
                 />
 
-                <Route
-                  path={`${match.url}/state-bill`}
-                  render={(props) => <StateBills {...props} />}
+                <PermissionedRoute
+                  permission={"tools"}
+                  permissionList={permissionList}
+                  path={`${match.url}/cbt`}
+                  component={CBT}
                 />
-                <Route
-                  path={`${match.url}/utility-bill`}
-                  render={(props) => <UtilityBills {...props} />}
+                <PermissionedRoute
+                  permission={"tools"}
+                  permissionList={permissionList}
+                  path={`${match.url}/classroom`}
+                  component={ClassRoom}
                 />
+                <PermissionedRoute
+                  permission={"tools"}
+                  permissionList={permissionList}
+                  path={`${match.url}/activity`}
+                  component={Activity}
+                />
+
+                <PermissionedRoute
+                  permission={"tools"}
+                  permissionList={permissionList}
+                  path={`${match.url}/admission`}
+                  component={Admission}
+                />
+
+                <PermissionedRoute
+                  permission={"settings"}
+                  permissionList={permissionList}
+                  path={`${match.url}/settings`}
+                  component={Settings}
+                />
+
                 {/* <Route
                 path={`${match.url}/history`}
                 render={(props) =>
@@ -159,12 +184,12 @@ const App = ({ match, ...props }) => {
                 render={(props) => <Help {...props} />}
               /> */}
 
-                <PermissionedRoute
+                {/* <PermissionedRoute
                   permission={"support"}
                   permissionList={permissionList}
                   path={`${match.url}/support`}
                   component={(props) => <Help {...props} />}
-                />
+                /> */}
 
                 <Redirect to="/error" />
               </Switch>

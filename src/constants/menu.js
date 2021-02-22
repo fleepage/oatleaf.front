@@ -17,14 +17,14 @@ const data = [
       {
         icon: "simple-icon-chart",
         label: "Admissions",
-        to: `${adminRoot}/assessment`,
-        permission: "assessment",
+        to: `${adminRoot}/admission`,
+        permission: "tools",
         // permission: [UserRole.Admin],
       },
       {
         icon: "iconsminds-building",
         label: "Classrooms",
-        to: `${adminRoot}/support/faq`,
+        to: `${adminRoot}/classroom`,
         // permission: [UserRole.Admin],
       },
       {
@@ -36,13 +36,13 @@ const data = [
       {
         icon: "simple-icon-notebook",
         label: "Student Activity",
-        to: `${adminRoot}/attendance`,
+        to: `${adminRoot}/activity`,
         // permission: [UserRole.Admin],
       },
       {
         icon: "simple-icon-notebook",
         label: "CBT",
-        to: `${adminRoot}/attendance`,
+        to: `${adminRoot}/cbt`,
         // permission: [UserRole.Admin],
       },
       {
@@ -52,19 +52,6 @@ const data = [
         permission: "assessment",
         // permission: [UserRole.Admin],
       },
-      {
-        icon: "simple-icon-chart",
-        label: "parent care",
-        to: `${adminRoot}/assessment`,
-        permission: "assessment",
-        // permission: [UserRole.Admin],
-      },
-      // {
-      //   icon: "simple-icon-clock",
-      //   label: "Teacher Attendance",
-      //   to: `${adminRoot}/support/ticket`,
-      //   // permission: [UserRole.Admin],
-      // },
     ],
   },
   // {
@@ -148,7 +135,7 @@ const data = [
     id: "settings",
     icon: "simple-icon-settings",
     label: "Settings",
-    to: `${adminRoot}/support`,
+    to: `${adminRoot}/settings`,
     permission: "settings",
   },
   // {

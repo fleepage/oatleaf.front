@@ -17,6 +17,7 @@ const ImageUpload = ({
   school,
   setup,
   imager,
+  handleLogoUploadToServer,
   ...props
 }) => {
   const [croppedImage, setCroppedImage] = useState(
@@ -115,7 +116,7 @@ const ImageUpload = ({
   //   }
   // };
 
-  const handleLogoUploadToServer = () => {};
+  //const handleLogoUploadToServer = () => {};
 
   // const handleLogoSkip = () => {
   //   next();
@@ -131,7 +132,11 @@ const ImageUpload = ({
           </Colxx> */}
         <Colxx md="12" lg="12" className="col-item mb-0 ">
           <img src={croppedImage} className="rounded-circle" width="200px" />
-          {blob && <p onClick={handleLogoUpload}>Change</p>}
+          {blob && (
+            <p onClick={handleLogoUpload} style={{ cursor: "pointer" }}>
+              Change
+            </p>
+          )}
         </Colxx>
       </Row>
 
@@ -153,7 +158,7 @@ const ImageUpload = ({
       {blob && (
         <Row>
           <Colxx xxs="12" className="text-center">
-            <Button onClick={handleLogoUploadToServer}>Next</Button>
+            <Button onClick={() => handleLogoUploadToServer(file)}>Next</Button>
           </Colxx>
         </Row>
       )}

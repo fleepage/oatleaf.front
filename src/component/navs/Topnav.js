@@ -1,45 +1,28 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-use-before-define */
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { injectIntl } from "react-intl";
-
-import {
-  UncontrolledDropdown,
-  DropdownItem,
-  DropdownToggle,
-  DropdownMenu,
-  Input,
-} from "reactstrap";
-
 import { NavLink } from "react-router-dom";
-import ThumbnailLetters from "../cards/ThumbnailLetters";
-
-import IntlMessages from "../../helpers/IntlMessages";
-
 import {
-  setContainerClassnames,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  UncontrolledDropdown,
+} from "reactstrap";
+import {
   clickOnMobileMenu,
-  logoutUser,
-  changeLocale,
+  setContainerClassnames,
 } from "../../actions/MenuActions";
-
-import { MenuContext } from "../../context/MenuContext";
-
+import { MenuIcon, MobileMenuIcon } from "../../component/svg";
 import {
+  adminRoot,
   menuHiddenBreakpoint,
   searchPath,
-  localeOptions,
-  // isDarkSwitchActive,
-  buyUrl,
-  adminRoot,
 } from "../../constants/defaultValues";
-
-import { MobileMenuIcon, MenuIcon } from "../../component/svg";
+import { MenuContext } from "../../context/MenuContext";
+import ThumbnailLetters from "../cards/ThumbnailLetters";
 import TopnavEasyAccess from "./Topnav.EasyAccess";
-// import TopnavDarkSwitch from "./Topnav.DarkSwitch";
-
-import { getDirection, setDirection } from "../../helpers/Utils";
 
 const TopNav = ({
   intl,
@@ -226,7 +209,7 @@ const TopNav = ({
 
       <div className="navbar-right">
         <div className="header-icons d-inline-block align-middle">
-          <TopnavEasyAccess />
+          {false && <TopnavEasyAccess />}
 
           <button
             className="header-icon btn btn-empty d-none d-sm-inline-block"
@@ -248,11 +231,10 @@ const TopNav = ({
             </DropdownToggle>
             <DropdownMenu className="mt-3" right>
               <DropdownItem onClick={() => handleAccountsSwitch()}>
-                Accounts
+                My Accounts
               </DropdownItem>
-              <DropdownItem>Features</DropdownItem>
-              <DropdownItem>History</DropdownItem>
-              <DropdownItem>Support</DropdownItem>
+              <DropdownItem>Profile</DropdownItem>
+
               {/* <div className="text-center">
                 {isDarkSwitchActive && <TopnavDarkSwitch />}
               </div> */}

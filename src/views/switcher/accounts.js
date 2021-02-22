@@ -32,12 +32,13 @@ const Account = ({ intl, match, ...props }) => {
             const parent = _accounts.data?.myAccounts.filter(
               (account) => account.parent
             );
-            console.log(parent.length);
+
             setAdminCount(admins.length);
             setHasParent(parent.length > 0);
             accountContext.dispatch(
               AddAccount({ data: _accounts.data?.myAccounts ?? [] })
             );
+            //console.log(_accounts.data?.myAccounts);
             setAccounts(accountContext.account.data ?? []);
           } else {
             authContext.dispatch(
@@ -129,6 +130,20 @@ const Account = ({ intl, match, ...props }) => {
                     //name={item.teachers.school.name}
                     detail={`Click to access your parent account. `}
                     //school={item.teachers.school}
+                    active={item.isActive}
+                    to="home"
+                    isAdmin={false}
+                    selected={i}
+                    accountId={item.id}
+                    history={props.history}
+                  />
+                ) : item.role == "Student" ? (
+                  <GradientWithRadialProgressCard
+                    icon="school.png"
+                    title={`${item.role} at ${item.students.school.identifier}`}
+                    name={item.students.school.name}
+                    detail={`Click to access your school account. `}
+                    school={item.students.school}
                     active={item.isActive}
                     to="home"
                     isAdmin={false}

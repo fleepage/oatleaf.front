@@ -29,9 +29,9 @@ const orderOptions = [
 const pageSizes = [4, 8, 12, 20];
 
 const gender = [
-  { label: "Male", value: 1, key: 0 },
-  { label: "Female", value: 2, key: 1 },
-  { label: "Not Specified", value: 0, key: 2 },
+  { label: "Male", value: 1, key: 1 },
+  { label: "Female", value: 2, key: 2 },
+  { label: "Not Specified", value: 0, key: 3 },
 ];
 
 const StudentList = ({ match }) => {

@@ -9,7 +9,7 @@ import OatleafReactTable from "../../../component/table/TableCard";
 import { adminRoot } from "../../../constants/defaultValues";
 import { MenuContext } from "../../../context/MenuContext";
 import { FetchAdmissionService } from "../../../services/toolService";
-const Parent = ({ match, history, ...props }) => {
+const CBT = ({ match, history, ...props }) => {
   const menuContext = useContext(MenuContext);
   const [statModal, setStatModal] = useState(false);
 
@@ -111,7 +111,7 @@ const Parent = ({ match, history, ...props }) => {
         filterByService={FetchAdmissionService}
         handleAddNew={handleAddNew}
         addNewText={"Add Assessment"}
-        title={"Parent(s)"}
+        title={"All Assessment"}
         match={match}
         idAccessor={"referenceKey"}
         hasActionMenu={true}
@@ -163,4 +163,4 @@ const Parent = ({ match, history, ...props }) => {
     </>
   );
 };
-export default Parent;
+export default CBT;
