@@ -27,9 +27,10 @@ const NewStudent = ({
   classes,
   toggleEditor,
   refresh,
+  firstStage = 3,
   token,
 }) => {
-  const [stage, setStage] = useState(1);
+  const [stage, setStage] = useState(firstStage);
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -135,7 +136,8 @@ const NewStudent = ({
       wrapClassName="modal-right"
       backdrop="static"
       onClosed={() => {
-        setStage(0);
+        setStage(firstStage);
+        setLoading(false);
         refresh.current.onClick();
       }}
     >

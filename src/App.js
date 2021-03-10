@@ -32,9 +32,6 @@ const ViewHome = React.lazy(() =>
 const ViewApp = React.lazy(() =>
   import(/* webpackChunkName: "views-app" */ "./views/app")
 );
-const RequestApp = React.lazy(() =>
-  import(/* webpackChunkName: "views-user" */ "./views/request")
-);
 
 const FourOfour = React.lazy(() =>
   import(/* webpackChunkName: "views-error" */ "./views/switcher/404")
@@ -101,11 +98,6 @@ class App extends React.Component {
                       <Route
                         path="/register"
                         render={(props) => <Register {...props} />}
-                      />
-                      <Route
-                        path="/request"
-                        component={RequestApp}
-                        //render={(props) => <RequestApp {...props} />}
                       />
 
                       {/*

@@ -111,72 +111,72 @@ const features = [
     detail:
       "You can View and track your payment. <br /><br />All at the comfort of your smartphone. You can also view and print receipt for any payment all you need to do is login to th platform head to Histroy and select what you are looking for",
   },
-  {
-    title: "Bookstore(s)",
-    action: 4,
-    img: "/assets/img/landing-page/features/store.svg",
-    detail:
-      "You can View and track your payment. <br /><br />All at the comfort of your smartphone. You can also view and print receipt for any payment all you need to do is login to th platform head to Histroy and select what you are looking for",
-  },
-  {
-    title: "sponsor/organisation",
-    action: 4,
-    img: "/assets/img/landing-page/features/ceo.svg",
-    detail:
-      "You can View and track your payment. <br /><br />All at the comfort of your smartphone. You can also view and print receipt for any payment all you need to do is login to th platform head to Histroy and select what you are looking for",
-  },
-  {
-    title: "Developer(s).",
-    action: 5,
-    img: "/assets/img/landing-page/features/developer.svg",
-    detail:
-      "Oatleaf Integrated Solutions Provides much more services, check our our website for more information on what we can do for you..",
-  },
+  // {
+  //   title: "Bookstore(s)",
+  //   action: 4,
+  //   img: "/assets/img/landing-page/features/store.svg",
+  //   detail:
+  //     "You can View and track your payment. <br /><br />All at the comfort of your smartphone. You can also view and print receipt for any payment all you need to do is login to th platform head to Histroy and select what you are looking for",
+  // },
+  // {
+  //   title: "sponsor/organisation",
+  //   action: 4,
+  //   img: "/assets/img/landing-page/features/ceo.svg",
+  //   detail:
+  //     "You can View and track your payment. <br /><br />All at the comfort of your smartphone. You can also view and print receipt for any payment all you need to do is login to th platform head to Histroy and select what you are looking for",
+  // },
+  // {
+  //   title: "Developer(s).",
+  //   action: 5,
+  //   img: "/assets/img/landing-page/features/developer.svg",
+  //   detail:
+  //     "Oatleaf Integrated Solutions Provides much more services, check our our website for more information on what we can do for you..",
+  // },
 ];
 
 const actions = [
   {
-    title: "Check Student Performance",
+    title: "Manage Your Children",
     icon: "simple-icon-graduation",
     value: "get the latest app from either google playstore or apple appstore",
     btext: "Check Now",
   },
-  {
-    title: "Get A Freelance Teacher",
-    icon: "simple-icon-user",
-    value: "get the latest app from either google playstore or apple appstore",
-    btext: "Find Now",
-  },
+  // {
+  //   title: "Get A Freelance Teacher",
+  //   icon: "simple-icon-user",
+  //   value: "get the latest app from either google playstore or apple appstore",
+  //   btext: "Find Now",
+  // },
   {
     title: "Find School",
     icon: "iconsminds-building",
     value: "get the latest app from either google playstore or apple appstore",
     btext: "Search",
   },
-  {
-    title: "Find Event",
-    icon: "iconsminds-mail-read",
-    value: "get the latest app from either google playstore or apple appstore",
-    btext: "Search",
-  },
+  // {
+  //   title: "Find Event",
+  //   icon: "iconsminds-mail-read",
+  //   value: "get the latest app from either google playstore or apple appstore",
+  //   btext: "Search",
+  // },
   {
     title: "Manage Your School",
     icon: "iconsminds-building",
     value: "get the latest app from either google playstore or apple appstore",
     btext: "Get Started",
   },
-  {
-    title: "Manage An Organisation",
-    icon: "iconsminds-building",
-    value: "get the latest app from either google playstore or apple appstore",
-    btext: "Get Started",
-  },
-  {
-    title: "Organise An Event",
-    icon: "iconsminds-building",
-    value: "get the latest app from either google playstore or apple appstore",
-    btext: "Get Started",
-  },
+  // {
+  //   title: "Manage An Organisation",
+  //   icon: "iconsminds-building",
+  //   value: "get the latest app from either google playstore or apple appstore",
+  //   btext: "Get Started",
+  // },
+  // {
+  //   title: "Organise An Event",
+  //   icon: "iconsminds-building",
+  //   value: "get the latest app from either google playstore or apple appstore",
+  //   btext: "Get Started",
+  // },
   {
     title: "Do Lot More",
     icon: "iconsminds-building",
@@ -284,7 +284,7 @@ const Home = (props) => {
             <div className="separator" />
           </li>
           <li className="nav-item pl-4">
-            <a className="btn btn-outline-primary btn-sm ml-2" href="/login">
+            <a className="btn btn-primary btn-sm ml-2" href="/login">
               Signin
             </a>
           </li>
@@ -312,7 +312,7 @@ const Home = (props) => {
                 </li>
                 <li className="nav-item pl-4">
                   <a
-                    className="btn btn-outline-primary btn-sm ml-2"
+                    className="btn btn-primary btn-sm ml-2 white"
                     href="/login"
                   >
                     Signin
@@ -349,10 +349,10 @@ const Home = (props) => {
                       Transforming schools into digital platforms.
                     </p>
                     <a
-                      className="btn btn-secondary btn-xl mr-2 mb-2"
-                      href="/request"
+                      className="btn btn-primary btn-xl mr-2 mb-2"
+                      href="/register"
                     >
-                      Find a School
+                      Get Started
                       <i className="simple-icon-arrow-right" />
                     </a>
                   </div>
@@ -369,6 +369,7 @@ const Home = (props) => {
                       autoplay: true,
                       animationDuration: 6000,
                       hoverpause: true,
+                      hideNav: true,
                     }}
                   >
                     {bannerItem.map((item) => {
@@ -487,7 +488,7 @@ const Home = (props) => {
             </div>
           </div>
 
-          <div className="section">
+          {/* <div className="section">
             <div className="container" id="app">
               <div className="row">
                 <div className="col-12 col-md-6 col-lg-5 d-flex align-items-center text-center">
@@ -527,7 +528,7 @@ const Home = (props) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="section">
             <div className="container" id="features">
@@ -591,7 +592,7 @@ const Home = (props) => {
             </div>
           </div>
 
-          <div className="section">
+          {/* <div className="section">
             <div className="container" id="partners">
               <div className="row">
                 <div className="col-12 offset-0 col-lg-8 offset-lg-2 text-center">
@@ -604,7 +605,7 @@ const Home = (props) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="section footer mb-0" ref={refSectionFooter}>
             <div className="container">

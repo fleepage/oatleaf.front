@@ -241,7 +241,7 @@ function ErcasTable({
     <>
       <div className="text-center">
         <img
-          src="/assets/img/utilities/empty.png"
+          src="/assets/img/utilities/empty.svg"
           style={{ width: "30%", height: "30%" }}
         />
         <h2>Nothing to show</h2>
