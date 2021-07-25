@@ -60,8 +60,8 @@ export const CLEAR_CURRENT_SCHOOL = "CLEAR CURRENT SCHOOL";
 export const STORE_DETAILS = "STORE DETAILS";
 export const UPDATE_DETAILS = "UPDATE DETAILS";
 
-export const BASE_URL = "https://localhost:44319/api";
-//export const BASE_URL = "https://api.oatleaf.com/api";
+//export const BASE_URL = "https://localhost:44319/api";
+export const BASE_URL = "https://api.oatleaf.com/api";
 
 //export const BASE_GATEWAY_URL = "http://35.193.238.146/gateway";
 export const ADMIN_LOGIN_URL = `${BASE_URL}/User/signin`;
